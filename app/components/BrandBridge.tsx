@@ -34,7 +34,7 @@ export default function BrandBridge() {
               <div className={styles.line} />
            </div>
            <p className={styles.subtext}>
-             Kremanska — Harmonija planine Tare u svakoj kapi.
+             Kremanska - Harmonija planine Tare u svakoj kapi.
            </p>
         </div>
       </div>

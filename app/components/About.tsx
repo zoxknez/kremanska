@@ -92,7 +92,7 @@ export default function About() {
              Kremanska nije samo voda. To je čista esencija vremena, 
              sačuvana u srcu najlepše srpske planine.
            </p>
-           <div className={styles.signature}>Kremanska Voda — Iskrena Priroda</div>
+           <div className={styles.signature}>Kremanska Voda - Iskrena Priroda</div>
         </footer>
 
       </div>

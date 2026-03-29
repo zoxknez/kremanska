@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kremanska Voda — Prirodna Visokoalkalna Voda | pH 9.2+",
+  title: "Kremanska Voda - Prirodna Visokoalkalna Voda | pH 9.2+",
   description:
-    "Izvorište Kremanske vode u neposrednoj blizini Nacionalnog parka Tara. Potpuno čista, nezagađena prirodna visokoalkalna voda sa pH 9.2+, bogata magnezijumom.",
+    "Izvoriste Kremanske vode u neposrednoj blizini Nacionalnog parka Tara. Potpuno cista, nezagadjena prirodna visokoalkalna voda sa pH 9.2+, bogata magnezijumom.",
   keywords: "kremanska voda, alkalna voda, pH 9.2, prirodna voda, Tara, Kremna, magnezijum, zdrava voda",
   openGraph: {
-    title: "Kremanska Voda — Prirodna Visokoalkalna Voda",
-    description: "Izvorište Kremanske vode u neposrednoj blizini Nacionalnog parka Tara što garantuje potpuno čistu i nezagađenu prirodu.",
+    title: "Kremanska Voda - Prirodna Visokoalkalna Voda",
+    description:
+      "Izvoriste Kremanske vode u neposrednoj blizini Nacionalnog parka Tara sto garantuje potpuno cistu i nezagadjenu prirodu.",
     type: "website",
     locale: "sr_RS",
   },
