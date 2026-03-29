@@ -37,8 +37,8 @@ export default function Navbar() {
               <path d="M20 4C20 4 8 18 8 26C8 32.627 13.373 38 20 38C26.627 38 32 32.627 32 26C32 18 20 4 20 4Z" fill="url(#dropGrad)" />
               <defs>
                 <linearGradient id="dropGrad" x1="20" y1="4" x2="20" y2="38" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#1a9ec2" />
-                  <stop offset="1" stopColor="#054d62" />
+                  <stop stopColor="#d84b57" />
+                  <stop offset="1" stopColor="#7a1019" />
                 </linearGradient>
               </defs>
             </svg>

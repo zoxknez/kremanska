@@ -13,8 +13,8 @@
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(10, 110, 138, 0.08);
-  box-shadow: 0 4px 30px rgba(10, 110, 138, 0.06);
+  border-bottom: 1px solid rgba(179, 33, 45, 0.08);
+  box-shadow: 0 4px 30px rgba(179, 33, 45, 0.06);
 }
 
 .inner {
@@ -90,7 +90,7 @@
 
 .link:hover {
   color: var(--color-primary);
-  background: rgba(10, 110, 138, 0.06);
+  background: rgba(179, 33, 45, 0.06);
 }
 
 .ctaBtn {
@@ -105,12 +105,12 @@
   border-radius: 50px;
   letter-spacing: 0.3px;
   transition: all 0.4s var(--ease-out-expo);
-  box-shadow: 0 4px 16px rgba(10, 110, 138, 0.25);
+  box-shadow: 0 4px 16px rgba(179, 33, 45, 0.24);
 }
 
 .ctaBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(10, 110, 138, 0.4);
+  box-shadow: 0 8px 28px rgba(179, 33, 45, 0.34);
 }
 
 .burger {

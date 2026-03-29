@@ -1,472 +1,434 @@
+/* ============================================================
+   PRODUCTS — SPLIT LAYOUT: BOTTLE LEFT / INFO PANEL RIGHT
+   Premium, editorial, no floating cards
+   ============================================================ */
+
 .section {
-  position: relative;
-  min-height: 100vh;
-  padding: 60px 0 180px;
-  background: #faf8f5;
+  background: #ffffff;
   overflow: hidden;
-  --accent-color: #0ea5e9;
-  --sunset-glow: rgba(245, 158, 11, 0.1);
+  padding-bottom: 160px;
 }
 
-/* Water Caustics Background */
-.causticsBackground {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: white;
-  pointer-events: none;
-}
-
-.causticsOverlay {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 20% 30%, rgba(14, 165, 233, 0.03), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.03), transparent 40%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size: cover;
-  animation: bgFlow 60s infinite linear;
-}
-
-@keyframes bgFlow {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
-}
-
-/* Showcase Header */
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.narrative {
-  padding: 40px 0;
-  width: 100%;
-}
-
-.preTitle {
-  display: inline-block;
-  font-family: var(--font-heading);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--accent-color);
-  text-transform: uppercase;
-  letter-spacing: 6px;
-  margin-bottom: 12px;
-}
-
-.quote {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 600;
-  color: #1a1a2e;
-  line-height: 1.1;
-  margin-bottom: 16px;
-  letter-spacing: -0.02em;
-}
-
-.italic {
-  font-style: italic;
-  font-weight: 400;
-  color: #10b981;
-}
-
-.bridgeFooter {
-  margin-bottom: 24px;
-}
-
-.subtext {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  color: #5a5a7a;
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-
-.divider {
+/* ── SECTION LABEL ── */
+.sectionLabel {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
+  padding: 80px 0 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
 }
 
-.line {
-  width: 40px;
-  height: 1px;
-  background: #1a1a2e;
-  opacity: 0.15;
+.sectionLabel.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.dot {
-  width: 6px;
-  height: 6px;
-  background: #0ea5e9;
-  border-radius: 50%;
-}
-
-.trinityHeader {
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  padding-top: 32px;
-  width: 100%;
-}
-
-.badge {
-  display: inline-block;
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent-color);
-  text-transform: uppercase;
-  letter-spacing: 6px;
-  margin-bottom: 8px;
-}
-
-.title {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 5vw, 40px);
-  font-weight: 800;
-  color: #1a1a2e;
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-
-.accent {
-  background: linear-gradient(135deg, var(--accent-color), #22d3ee);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Trinity Layout */
-.trinityShowcase {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
-  align-items: center;
-  gap: 40px;
-  position: relative;
-}
-
-/* Pebble Benefits */
-.benefitColumn {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-}
-
-.pebbleCard {
-  position: relative;
-  z-index: 10;
-  border-radius: 40px;
-  padding: 4px;
-  transition: transform 0.6s var(--ease-out-expo);
-  animation: floating 8s infinite ease-in-out alternate;
-}
-
-.pebbleCard:nth-child(even) { animation-delay: -3s; }
-
-@keyframes floating {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-15px); }
-}
-
-.pebbleGlass {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 40px;
-  z-index: 0;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
-}
-
-.pebbleCard:hover .pebbleGlass {
-  background: rgba(255, 255, 255, 0.6);
-  border-color: var(--accent);
-  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.08);
-}
-
-.cardContent {
-  position: relative;
-  z-index: 10;
-  padding: 32px;
-  display: flex;
-  gap: 24px;
-  align-items: center;
-}
-
-.iconBox {
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
+.sectionLabel .container-custom {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s;
+  gap: 20px;
 }
 
-.iconBox svg { width: 28px; height: 28px; }
-
-.pebbleCard:hover .iconBox {
-  background: var(--accent);
-  color: white;
-  transform: scale(1.1) rotate(5deg);
-}
-
-.itemLabel {
+.sectionLabelLine {
   display: block;
+  width: 48px;
+  height: 1px;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.sectionLabelText {
   font-family: var(--font-heading);
   font-size: 11px;
   font-weight: 700;
-  color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 8px;
+  letter-spacing: 0.25em;
+  color: var(--color-primary);
 }
 
-.itemTitle {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 8px;
-}
-
-.itemText {
-  font-size: 14px;
-  color: #5a5a7a;
-  line-height: 1.6;
-}
-
-.pebbleGlow {
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle at center, var(--accent), transparent 60%);
-  opacity: 0.05;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Central Trinity Stage */
-.trinityStage.bridge {
-  position: relative;
-  padding: 100px 0 40px;
-  display: flex;
+/* ── MAIN LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
   align-items: center;
-  overflow: hidden;
-  justify-content: center;
+  padding-top: 80px;
 }
 
-.pedestalGlow {
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
-  height: 200px;
-  background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  filter: blur(40px);
-}
+/* ============================================================
+   LEFT — BOTTLE STAGE
+   ============================================================ */
 
-.pedestalCaustics {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 250px;
-  height: 60px;
-  background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.4) 0%, transparent 80%);
-  border-radius: 50%;
-  filter: contrast(1.5) brightness(1.2);
-  mix-blend-mode: soft-light;
-  animation: causticsMove 8s infinite alternate;
-}
-
-@keyframes causticsMove {
-  0% { transform: translateX(-50%) scale(1); opacity: 0.4; }
-  100% { transform: translateX(-50%) scale(1.2); opacity: 0.7; }
-}
-
-.productCarousel {
+.stage {
   position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
-  transition: transform 0.1s linear;
-}
-
-.bottleFrame {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.bottleImg {
-  height: 85%;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.1));
-}
-
-.activeLabel {
-  position: absolute;
-  bottom: 20px;
-  text-align: center;
+  gap: 48px;
   opacity: 0;
-  transform: translateY(20px);
-  animation: textReveal 0.8s 0.6s forwards;
+  transform: translateX(-30px);
+  transition: opacity 1s 0.1s var(--ease-out-expo), transform 1s 0.1s var(--ease-out-expo);
 }
 
-@keyframes textReveal {
-  to { opacity: 1; transform: translateY(0); }
+.stage.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.sizeTag {
-  display: inline-block;
-  padding: 6px 16px;
-  background: #1a1a2e;
-  color: white;
-  border-radius: 30px;
+/* Soft background orb behind the bottle */
+.stageOrb {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -56%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(179, 33, 45, 0.06) 0%, rgba(196, 163, 90, 0.03) 50%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Bottle container */
+.bottleWrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 580px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bottle {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  width: 240px;
+  max-height: 540px;
+  object-fit: contain;
+  transition:
+    opacity 0.5s var(--ease-out-expo),
+    transform 0.6s var(--ease-out-expo),
+    filter 0.5s ease;
+  filter: drop-shadow(0 40px 80px rgba(17, 17, 34, 0.14));
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.bottleActive {
+  filter: drop-shadow(0 60px 100px rgba(17, 17, 34, 0.2));
+}
+
+/* ── SIZE SELECTOR ── */
+.sizeTabs {
+  display: flex;
+  gap: 10px;
+}
+
+.sizeTab {
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(179, 33, 45, 0.15);
+  background: transparent;
   font-family: var(--font-heading);
-  font-size: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.sizeTab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(179, 33, 45, 0.03);
+}
+
+.sizeTabActive {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(179, 33, 45, 0.28);
+}
+
+.sizeTabActive:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: #ffffff;
+}
+
+/* ============================================================
+   RIGHT — INFO PANEL
+   ============================================================ */
+
+.infoPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 1s 0.2s var(--ease-out-expo), transform 1s 0.2s var(--ease-out-expo);
+}
+
+.infoPanel.visibleRight {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Product identity */
+.productIdentity {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.productEyebrow {
+  font-family: var(--font-heading);
+  font-size: 11px;
   font-weight: 700;
-  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--color-primary);
 }
 
 .productName {
   font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 800;
-  color: #1a1a2e;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  margin: 0;
 }
 
-/* Dots Nav */
-.stageNav {
-  position: absolute;
-  bottom: -40px;
+.productTagline {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.productDesc {
+  font-size: 1.05rem;
+  line-height: 1.78;
+  color: var(--color-text-secondary);
+  max-width: 48ch;
+  margin: 4px 0 0;
+}
+
+/* ── DIVIDER ── */
+.panelDivider {
+  height: 1px;
+  background: rgba(26, 26, 46, 0.07);
+}
+
+/* ── SPECS GRID ── */
+.specsGrid {
   display: flex;
-  gap: 16px;
-  z-index: 20;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.navDot {
-  width: 12px;
-  height: 12px;
-  background: rgba(26, 26, 46, 0.15);
+.specsHeading {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+  margin: 0;
+}
+
+.specsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 32px;
+}
+
+.specItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  padding-left: 16px;
+}
+
+.specItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  transition: all 0.4s;
+  background: var(--color-primary);
 }
 
-.navDot:hover { background: rgba(26, 26, 46, 0.3); }
-
-.dotActive {
-  background: var(--accent-color);
-  width: 32px;
-  border-radius: 10px;
+.specValue {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  line-height: 1;
 }
 
-/* Buttons */
-.boutiqueBtn {
+.specLabel {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  opacity: 0.65;
+}
+
+.specNote {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+/* ── FEATURE TAGS ── */
+.featureTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.featureTag {
   display: inline-flex;
   align-items: center;
-  gap: 20px;
-  padding: 8px 8px 8px 32px;
-  background: white;
-  border-radius: 100px;
-  text-decoration: none;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-  transition: all 0.4s var(--ease-out-expo);
-}
-
-.boutiqueBtn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.12);
-}
-
-.btnText {
+  padding: 6px 16px;
+  border: 1px solid rgba(179, 33, 45, 0.15);
+  border-radius: 999px;
   font-family: var(--font-heading);
-  font-weight: 700;
-  color: #1a1a2e;
-  font-size: 16px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  background: rgba(179, 33, 45, 0.02);
+  transition: all 0.25s ease;
 }
 
-.btnIcon {
-  width: 50px;
-  height: 50px;
-  background: #1a1a2e;
-  color: white;
-  border-radius: 50%;
-  display: flex;
+.featureTag:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(179, 33, 45, 0.04);
+}
+
+/* ── CTA ── */
+.cta {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.4s;
+  gap: 14px;
+  align-self: flex-start;
+  padding: 18px 40px;
+  background: var(--color-text);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: all 0.4s var(--ease-out-expo);
+  box-shadow: 0 12px 40px rgba(26, 26, 46, 0.18);
 }
 
-.boutiqueBtn:hover .btnIcon {
-  background: var(--accent-color);
-  transform: rotate(45deg);
+.cta:hover {
+  transform: translateY(-4px);
+  background: var(--color-primary);
+  box-shadow: 0 20px 60px rgba(179, 33, 45, 0.3);
+  gap: 20px;
 }
 
-.footerCTA {
-  text-align: center;
-  margin-top: 100px;
-}
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 
-/* Atmospheric Mist Overlay */
-.mistOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30vh;
-  background: linear-gradient(to top, rgba(250, 248, 245, 1), transparent);
-  z-index: 5;
-  pointer-events: none;
-}
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    padding-top: 60px;
+  }
 
-/* Full-height backgrounds are too tall? No, these sections are meant to be cinematic. */
+  .stage {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
 
-/* Responsive */
-@media (max-width: 1200px) {
-  .trinityShowcase { grid-template-columns: 1fr; gap: 80px; }
-  .trinityStage { order: -1; min-height: 500px; }
-  .benefitColumn { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-  .pebbleCard { width: 340px; }
+  .stage.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .bottleWrap {
+    height: 440px;
+    max-width: 280px;
+  }
+
+  .bottle {
+    width: 200px;
+  }
+
+  .infoPanel {
+    transform: translateY(20px);
+  }
+
+  .infoPanel.visibleRight {
+    transform: translateY(0);
+  }
+
+  .specsList {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-  .title { font-size: 42px; }
-  .trinityStage { min-height: 400px; }
-  .pebbleCard { width: 100%; }
+  .section {
+    padding-bottom: 100px;
+  }
+
+  .productName {
+    font-size: 2.8rem;
+  }
+
+  .specsList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bottleWrap {
+    height: 380px;
+  }
+
+  .bottle {
+    width: 160px;
+  }
+
+  .stageOrb {
+    width: 360px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sizeTabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
 }
