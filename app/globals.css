@@ -48,10 +48,17 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--color-bg);
+  background:
+    radial-gradient(circle at top, rgba(179, 33, 45, 0.04), transparent 24%),
+    linear-gradient(180deg, #fbfbfd 0%, #f8f9fc 100%);
   color: var(--color-text);
   overflow-x: hidden;
   line-height: 1.7;
+}
+
+::selection {
+  background: rgba(179, 33, 45, 0.16);
+  color: var(--color-text);
 }
 
 img,

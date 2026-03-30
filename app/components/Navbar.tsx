@@ -14,7 +14,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -49,16 +49,27 @@ export default function Navbar() {
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.inner}>
-        <a href="#hero" className={styles.logo} onClick={(e) => handleLinkClick(e, "#hero")}>
+        <a href="#hero" className={styles.logo} onClick={(e) => handleLinkClick(e, "#hero")} data-magnetic>
           <div className={styles.logoIcon}>
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
-                d="M20 4C20 4 8 18 8 26C8 32.627 13.373 38 20 38C26.627 38 32 32.627 32 26C32 18 20 4 20 4Z"
-                fill="url(#dropGrad)"
+                d="M20 4.5C20 4.5 8.5 18 8.5 25.5C8.5 31.85 13.65 37 20 37C26.35 37 31.5 31.85 31.5 25.5C31.5 18 20 4.5 20 4.5Z"
+                fill="url(#logoDropGrad)"
+                stroke="white"
+                strokeWidth="0.5"
+                strokeOpacity="0.2"
+              />
+              <path
+                d="M17 12c0 0-4 6-4 10s3 7 7 7"
+                stroke="white"
+                strokeWidth="0.8"
+                strokeLinecap="round"
+                strokeOpacity="0.3"
               />
               <defs>
-                <linearGradient id="dropGrad" x1="20" y1="4" x2="20" y2="38" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#d84b57" />
+                <linearGradient id="logoDropGrad" x1="20" y1="4" x2="20" y2="38" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#e26a75" />
+                  <stop offset="0.5" stopColor="#b3212d" />
                   <stop offset="1" stopColor="#7a1019" />
                 </linearGradient>
               </defs>
@@ -76,6 +87,7 @@ export default function Navbar() {
                 href={link.href}
                 className={styles.link}
                 onClick={(e) => handleLinkClick(e, link.href)}
+                data-magnetic
               >
                 {link.label}
               </a>
@@ -86,6 +98,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener"
               onClick={() => setMenuOpen(false)}
+              data-magnetic
             >
               Narucite online
             </a>
