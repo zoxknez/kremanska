@@ -22,28 +22,28 @@ const products = [
     intrinsicHeight: 641,
   },
   {
-    id: "2L",
-    name: "Kremanska 2L",
-    size: "1.5L / 2L",
+    id: "1.5L",
+    name: "Kremanska 1.5L",
+    size: "1.5L",
     label: "Za svakodnevnu ravnotezu",
-    desc: "Glavni format za dom i posao. Optimalan odnos izmedju prakticnosti, kolicine i premium osecaja.",
+    desc: "Glavni format za dom i posao. Optimalan odnos između praktičnosti, količine i premium osećaja.",
     showcase: "Glavni format",
     context: "Dom i kancelarija",
     profile: "Potpisni dnevni balans",
-    image: "/proizvodi/voda-kremanska-1.5l-transparent.png",
-    imageWidth: "208px",
+    image: "/proizvodi/Kremanska 1.5L front.jpg",
+    imageWidth: "344px",
     imageMaxHeight: "556px",
     imageOffsetX: "0px",
-    intrinsicWidth: 194,
-    intrinsicHeight: 719,
+    intrinsicWidth: 3648,
+    intrinsicHeight: 5472,
   },
   {
     id: "6L",
     name: "Kremanska 6L",
     size: "6 L",
     label: "Za porodicu i dom",
-    desc: "Veliki format za kontinuitet i ozbiljnu kucnu rezervu prirodne alkalne vode sa Tare.",
-    showcase: "Porodicna rezerva",
+    desc: "Veliki format za kontinuitet i ozbiljnu kućnu rezervu prirodne alkalne vode sa Tare.",
+    showcase: "Porodična rezerva",
     context: "Porodica i dom",
     profile: "Veliki format za kontinuitet",
     image: "/proizvodi/voda-kremanska-6l-transparent.png",
@@ -146,9 +146,9 @@ const AltIcon = () => (
 );
 
 const specs = [
-  { label: "Izvoriste", value: "822", unit: "m", note: "Planina Tara", Icon: AltIcon },
+  { label: "Izvorište", value: "822", unit: "m", note: "Planina Tara", Icon: AltIcon },
   { label: "pH vrednost", value: "9.2+", unit: "", note: "Visokoalkalna", Icon: PhIcon },
-  { label: "Magnezijum", value: "126", unit: "mg", note: "Na 2L", Icon: MgIcon },
+  { label: "Magnezijum", value: "126", unit: "mg", note: "Na 1.5L", Icon: MgIcon },
   { label: "Natrijum", value: "17.8", unit: "mg/L", note: "Nizak", Icon: NaIcon },
 ];
 
@@ -203,10 +203,28 @@ export default function Products() {
   const [activeIndex, setActiveIndex] = useState(1);
   const [specsVisible, setSpecsVisible] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [stageMotionEnabled, setStageMotionEnabled] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const specsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    const syncStageMotion = () => {
+      setStageMotionEnabled(mediaQuery.matches);
+      if (!mediaQuery.matches) {
+        setMousePos({ x: 0, y: 0 });
+      }
+    };
+
+    syncStageMotion();
+    mediaQuery.addEventListener("change", syncStageMotion);
+
+    return () => mediaQuery.removeEventListener("change", syncStageMotion);
+  }, []);
+
+  useEffect(() => {
+    if (!stageMotionEnabled) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!sectionRef.current) return;
       const { left, top, width, height } = sectionRef.current.getBoundingClientRect();
@@ -217,7 +235,7 @@ export default function Products() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [stageMotionEnabled]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -375,7 +393,7 @@ export default function Products() {
                   width={product.intrinsicWidth}
                   height={product.intrinsicHeight}
                   sizes="(max-width: 480px) 210px, (max-width: 768px) 240px, (max-width: 1100px) 320px, 432px"
-                  priority={product.id === "2L"}
+                  priority={product.id === "1.5L"}
                   className={`${styles.bottle} ${index === activeIndex ? styles.bottleActive : ""}`}
                   style={
                     {
@@ -397,7 +415,7 @@ export default function Products() {
 
             <div className={styles.stageFooter}>
               <div className={styles.sizeTabsWrap}>
-                <span className={styles.sizeTabsLabel}>Odaberite ambalazu</span>
+                <span className={styles.sizeTabsLabel}>Odaberite ambalažu</span>
                 <div className={styles.sizeTabs}>
                   {products.map((product, index) => (
                     <button
@@ -450,7 +468,7 @@ export default function Products() {
                   <span className={styles.specsHeadingLine} aria-hidden="true" />
                   Mineralni profil
                 </p>
-                <span className={styles.specsLead}>Karakteristicne vrednosti prirodno alkalne vode</span>
+                <span className={styles.specsLead}>Karakteristične vrednosti prirodno alkalne vode</span>
               </div>
 
               <span className={styles.specsBadge}>
@@ -485,8 +503,8 @@ export default function Products() {
 
           <div className={styles.featureBlock}>
             <div className={styles.featureHead}>
-              <span className={styles.featureHeadTitle}>Kljucne odlike</span>
-              <span className={styles.featureHeadMeta}>Uravnotezen premium profil</span>
+              <span className={styles.featureHeadTitle}>Ključne odlike</span>
+              <span className={styles.featureHeadMeta}>Uravnotežen premium profil</span>
             </div>
 
             <div className={styles.featureTags}>
@@ -513,7 +531,7 @@ export default function Products() {
                 data-magnetic
               >
                 <span className={styles.ctaShimmer} aria-hidden="true" />
-                <span className={styles.ctaText}>Narucite online</span>
+                <span className={styles.ctaText}>Naručite online</span>
                 <span className={styles.ctaArrowWrap} aria-hidden="true">
                   <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
                     <path d="M0 5h13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />

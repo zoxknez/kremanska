@@ -44,6 +44,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -54,6 +55,19 @@ body {
   color: var(--color-text);
   overflow-x: hidden;
   line-height: 1.7;
+  min-width: 320px;
+}
+
+main {
+  position: relative;
+  isolation: isolate;
+}
+
+h1,
+h2,
+h3,
+p {
+  text-wrap: pretty;
 }
 
 ::selection {
@@ -70,6 +84,7 @@ video {
 a,
 button {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* ===== SCROLLBAR ===== */

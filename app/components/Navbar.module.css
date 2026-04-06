@@ -86,16 +86,31 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: 0 0 auto;
 }
 
 .mobilePanel {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(10, 10, 16, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .mobileEyebrow {
   display: none;
+}
+
+.navbar.scrolled .mobilePanel {
+  background: rgba(15, 15, 14, 0.34);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .link {
@@ -143,7 +158,7 @@
 }
 
 .ctaBtn {
-  margin-left: 14px;
+  margin-left: 8px;
   padding: 12px 30px;
   border-radius: 999px;
   background: var(--color-primary);
@@ -183,6 +198,7 @@
   position: relative;
   z-index: 11;
   transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
 }
 
 .navbar.scrolled .burger {
@@ -226,7 +242,7 @@
   .links {
     position: fixed;
     inset: 0;
-    padding: 84px 16px 18px;
+    padding: calc(84px + env(safe-area-inset-top)) 16px 18px;
     background: rgba(10, 10, 16, 0.34);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -258,6 +274,9 @@
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
+    max-height: min(72vh, 560px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .mobileEyebrow {
@@ -314,6 +333,10 @@
 
   .logoText {
     font-size: 22px;
+  }
+
+  .mobilePanel {
+    width: min(100%, 440px);
   }
 }
 

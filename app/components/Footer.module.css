@@ -106,7 +106,7 @@
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: clamp(40px, 8vw, 100px);
-  align-items: center;
+  align-items: start;
   padding: clamp(40px, 6vw, 80px) clamp(30px, 5vw, 70px);
   border-radius: 44px;
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
@@ -133,6 +133,7 @@
   flex-direction: column;
   gap: 28px;
   position: relative;
+  min-width: 0;
 }
 
 .ctaLeft::before {
@@ -149,7 +150,9 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  width: min(100%, 560px);
+  width: 100%;
+  max-width: 620px;
+  min-width: 0;
 }
 
 .mapHeader {
@@ -171,11 +174,14 @@
 
 .mapFrame {
   position: relative;
+  aspect-ratio: 16 / 11;
   min-height: 380px;
   border-radius: 36px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(10, 10, 9, 0.4);
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.2), transparent 30%),
+    linear-gradient(180deg, rgba(243, 238, 229, 0.96), rgba(210, 204, 194, 0.82));
   box-shadow:
     0 40px 80px rgba(0, 0, 0, 0.5),
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -190,8 +196,8 @@
   position: absolute;
   inset: 0;
   background: 
-    linear-gradient(180deg, transparent 60%, rgba(10, 10, 9, 0.6) 100%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+    linear-gradient(180deg, transparent 62%, rgba(10, 10, 9, 0.24) 100%),
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.18), transparent 34%);
   pointer-events: none;
   z-index: 2;
 }
@@ -212,9 +218,10 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(10, 10, 9, 0.04), rgba(10, 10, 9, 0.45)),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 24%);
+    linear-gradient(180deg, rgba(10, 10, 9, 0.02), rgba(10, 10, 9, 0.12)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 28%);
   pointer-events: none;
+  z-index: 1;
 }
 
 .mapIframe {
@@ -223,60 +230,8 @@
   width: 100%;
   height: 100%;
   border: 0;
-  filter: grayscale(0.08) saturate(0.9) contrast(1.02);
-}
-
-.mapOverlayLink {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 18px;
-  text-decoration: none;
-}
-
-.mapOverlayBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: rgba(10, 10, 9, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #ffffff;
-  transition: all 0.4s var(--ease-out-expo);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-.badgeIcon {
-  display: flex;
-  color: var(--color-primary-light);
-  filter: drop-shadow(0 0 5px rgba(179, 33, 45, 0.4));
-}
-
-.badgeShimmer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  animation: badgeShimmer 3s infinite linear;
-  pointer-events: none;
-}
-
-.mapOverlayLink:hover .mapOverlayBadge {
-  transform: translateY(-4px) scale(1.04);
-  background: rgba(179, 33, 45, 0.9);
-  border-color: rgba(255, 255, 255, 0.3);
+  filter: saturate(1.02) contrast(1.02);
+  z-index: 0;
 }
 
 .mapLinkRow {
@@ -387,13 +342,15 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 28px;
+  align-self: center;
+  min-width: 0;
 }
 
 .ctaDesc {
   font-size: 1.05rem;
   line-height: 1.75;
   color: rgba(245, 240, 235, 0.5);
-  max-width: 38ch;
+  max-width: 42ch;
   margin: 0;
 }
 
@@ -403,6 +360,8 @@
   align-items: flex-start;
   gap: 24px;
   width: 100%;
+  max-width: 420px;
+  min-width: 0;
 }
 
 .ctaBtn {
@@ -454,11 +413,40 @@
 }
 
 .ctaPhone {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+  padding: 16px 18px 15px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 14px 28px rgba(0, 0, 0, 0.18);
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition:
+    transform 0.35s var(--ease-out-expo),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.ctaPhone::before {
+  content: "";
+  position: absolute;
+  inset: auto -24px -38px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(179, 33, 45, 0.14), transparent 72%);
+  opacity: 0.58;
+  pointer-events: none;
 }
 
 .phoneLabel {
@@ -466,26 +454,37 @@
   font-size: 9px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.24em;
-  color: rgba(245, 240, 235, 0.3);
+  letter-spacing: 0.22em;
+  color: rgba(245, 240, 235, 0.36);
 }
 
 .phoneNumber {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 300;
-  color: rgba(245, 240, 235, 0.6);
-  letter-spacing: 0.05em;
+  font-size: 1.24rem;
+  font-weight: 600;
+  color: rgba(245, 240, 235, 0.82);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
   transition: all 0.3s ease;
+}
+
+.ctaPhone:hover {
+  border-color: rgba(179, 33, 45, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 20px 34px rgba(0, 0, 0, 0.24),
+    0 0 24px rgba(179, 33, 45, 0.08);
+  transform: translateY(-2px);
 }
 
 .ctaPhone:hover .phoneNumber {
   color: #ffffff;
-  transform: translateX(4px);
-}
-
-.ctaPhone:hover {
-  color: rgba(245, 240, 235, 0.85);
+  transform: translateX(2px);
 }
 
 /* ============================================================
@@ -693,7 +692,7 @@
 @media (max-width: 900px) {
   .ctaBand {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
     padding-bottom: 64px;
   }
 
@@ -723,14 +722,42 @@
     grid-template-columns: 1fr;
     gap: 28px;
     padding: 48px 0 72px;
+    text-align: center;
+  }
+
+  .infoBlock {
+    align-items: center;
+    text-align: center;
+  }
+
+  .infoLabelWrap {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .infoValue,
+  .infoLink {
+    text-align: center;
+  }
+
+  .navList,
+  .socialList {
+    align-items: center;
+    width: 100%;
+  }
+
+  .navList a {
+    justify-content: center;
   }
 
   .ctaLeft {
     gap: 20px;
+    width: 100%;
   }
 
   .ctaRight {
     gap: 20px;
+    width: 100%;
   }
 
   .mapHeader {
@@ -740,7 +767,7 @@
   }
 
   .mapFrame {
-    min-height: 300px;
+    min-height: 320px;
     border-radius: 24px;
   }
 
@@ -756,20 +783,55 @@
   .ctaBtn {
     width: 100%;
     justify-content: center;
-    padding: 18px 24px;
+    min-height: 54px;
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
   }
 
   .ctaPhone {
-    font-size: 0.96rem;
+    align-items: center;
+    max-width: none;
+    padding: 14px 16px;
+    border-radius: 18px;
+    text-align: center;
+  }
+
+  .phoneLabel,
+  .phoneNumber {
+    text-align: center;
+  }
+
+  .phoneNumber {
+    font-size: 1.16rem;
+  }
+
+  .ctaBand {
+    padding: 32px 20px 56px;
+    border-radius: 32px;
   }
 
   .mapLinkRow {
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding-inline: 4px;
   }
 
   .mapLink,
   .mapLinkPrimary {
-    flex: 1 1 220px;
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    padding: 0 14px;
+    border-radius: 18px;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
   }
 
   .socialLink {
@@ -779,9 +841,10 @@
 
   .bottomBar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     padding-bottom: 52px;
+    text-align: center;
   }
 }
 
@@ -801,7 +864,12 @@
 
   .ctaBand {
     gap: 28px;
-    padding-bottom: 52px;
+    padding: 24px 18px 44px;
+  }
+
+  .mapShell,
+  .ctaActions {
+    padding-inline: 4px;
   }
 
   .ctaLabel {
@@ -811,7 +879,42 @@
   }
 
   .mapFrame {
-    min-height: 250px;
+    min-height: 260px;
+  }
+
+  .mapLinkRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .mapLink,
+  .mapLinkPrimary {
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: 16px;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+  }
+
+  .mapLink {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .mapLinkPrimary {
+    background: linear-gradient(135deg, #b3212d, #cf2b39);
+    border-color: rgba(216, 75, 87, 0.42);
+    box-shadow:
+      0 10px 22px rgba(179, 33, 45, 0.2),
+      0 0 18px rgba(179, 33, 45, 0.12);
+  }
+
+  .mapLinkIcon {
+    width: 14px;
+    min-width: 14px;
+    justify-content: center;
   }
 
   .ctaTitle {
@@ -823,8 +926,28 @@
   }
 
   .ctaBtn {
-    font-size: 0.76rem;
-    letter-spacing: 0.12em;
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .ctaPhone {
+    gap: 7px;
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
+
+  .phoneLabel {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+  }
+
+  .phoneNumber {
+    font-size: 1.08rem;
+    letter-spacing: 0.03em;
   }
 
   .bottomBar {

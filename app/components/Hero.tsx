@@ -54,36 +54,51 @@ const MgIcon = () => (
 
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
-  const [useLiteHero, setUseLiteHero] = useState(true);
+  const [showPosterHero, setShowPosterHero] = useState(false);
+  const [enableParallax, setEnableParallax] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px), (prefers-reduced-motion: reduce)");
-    const syncHeroMode = () => setUseLiteHero(mediaQuery.matches);
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopQuery = window.matchMedia("(min-width: 768px)");
+
+    const syncHeroMode = () => {
+      const shouldShowPoster = reducedMotionQuery.matches;
+      const shouldEnableParallax = desktopQuery.matches && !shouldShowPoster;
+
+      setShowPosterHero(shouldShowPoster);
+      setEnableParallax(shouldEnableParallax);
+
+      if (!shouldEnableParallax) {
+        setScrollY(0);
+      }
+    };
 
     syncHeroMode();
 
     const handleScroll = () => {
-      if (!mediaQuery.matches) {
+      if (desktopQuery.matches && !reducedMotionQuery.matches) {
         setScrollY(window.scrollY);
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    mediaQuery.addEventListener("change", syncHeroMode);
+    reducedMotionQuery.addEventListener("change", syncHeroMode);
+    desktopQuery.addEventListener("change", syncHeroMode);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      mediaQuery.removeEventListener("change", syncHeroMode);
+      reducedMotionQuery.removeEventListener("change", syncHeroMode);
+      desktopQuery.removeEventListener("change", syncHeroMode);
     };
   }, []);
 
-  const parallax = useLiteHero ? 0 : scrollY * 0.5;
+  const parallax = enableParallax ? scrollY * 0.5 : 0;
 
   return (
     <section id="hero" className={styles.hero} ref={heroRef}>
       <div className={styles.videoCapture}>
-        {useLiteHero ? (
+        {showPosterHero ? (
           <div className={styles.posterFrame} style={{ backgroundImage: `url(${heroPoster})` }} />
         ) : (
           <video
@@ -102,7 +117,7 @@ export default function Hero() {
         <div className={styles.videoOverlay} />
       </div>
 
-      <div className={styles.mistLayer} style={{ opacity: useLiteHero ? 0.45 : Math.max(0, 1 - scrollY / 600) }}>
+      <div className={styles.mistLayer} style={{ opacity: showPosterHero ? 0.45 : Math.max(0, 1 - scrollY / 600) }}>
         <div className={styles.mistCloud1} />
         <div className={styles.mistCloud2} />
       </div>
@@ -123,15 +138,15 @@ export default function Hero() {
 
           <div className={styles.descriptionWrapper}>
             <p className={styles.mainDescription}>
-              Cista esencija prirode u svakoj kapi. Iz srca netaknute planine, direktno
-              do vase svakodnevne ravnoteze.
+              Čista esencija prirode u svakoj kapi. Iz srca netaknute planine, direktno
+              do vaše svakodnevne ravnoteže.
             </p>
           </div>
 
           <div className={styles.originNote}>
             <span className={styles.originNoteLine} />
             <p className={styles.originNoteText}>
-              Prirodno filtrirana kroz stene Tare, punjena uz ocuvanje izvornog mineralnog profila.
+              Prirodno filtrirana kroz stene Tare, punjena uz očuvanje izvornog mineralnog profila.
             </p>
           </div>
 
@@ -165,7 +180,7 @@ export default function Hero() {
               data-magnetic
             >
               <span className={styles.ctaBtnContent}>
-                Narucite online
+                Naručite online
                 <svg
                   width="20"
                   height="20"
@@ -197,7 +212,7 @@ export default function Hero() {
         <div className={styles.mouse}>
           <div className={styles.wheel} />
         </div>
-        <span>Otkrijte vise</span>
+        <span>Otkrijte više</span>
       </div>
     </section>
   );

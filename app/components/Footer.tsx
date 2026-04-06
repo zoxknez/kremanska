@@ -1,10 +1,10 @@
 import styles from "./Footer.module.css";
 
-const locationQuery = "Kremna bb, 31242 Kremna, Srbija";
-const locationGoogleHref =
-  "https://www.google.com/maps?cid=6254896962477670200&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAEYASAB&hl=sr-RS&source=embed";
-const locationEmbedSrc = locationGoogleHref;
-const locationViewHref = locationGoogleHref;
+const locationQuery = "Kremanska voda, MVP Group d.o.o., Kremna bb, 31242 Kremna, Srbija";
+const locationEmbedSrc =
+  `https://maps.google.com/maps?q=${encodeURIComponent(locationQuery)}&hl=sr&z=17&iwloc=B&output=embed`;
+const locationViewHref =
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationQuery)}`;
 const locationDirectionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationQuery)}&travelmode=driving`;
 
 const LocationIcon = () => (
@@ -99,25 +99,12 @@ export default function Footer() {
                   src={locationEmbedSrc}
                   title="Google mapa lokacije Kremanske vode"
                   loading="lazy"
+                  allowFullScreen
                   referrerPolicy="no-referrer-when-downgrade"
                   className={styles.mapIframe}
                 />
 
                 <div className={styles.mapAtmosphere} />
-
-                <a
-                  href={locationDirectionsHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.mapOverlayLink}
-                  aria-label="Pokreni navigaciju do lokacije Kremanske vode"
-                >
-                  <span className={styles.mapOverlayBadge}>
-                    <span className={styles.badgeIcon}><CompassIcon /></span>
-                    Pokreni navigaciju
-                    <span className={styles.badgeShimmer} />
-                  </span>
-                </a>
               </div>
 
               <div className={styles.mapLinkRow}>
@@ -148,7 +135,7 @@ export default function Footer() {
           <div className={styles.ctaRight}>
             <p className={styles.ctaDesc}>
               Kremanska voda - premium izvorna voda sa srca Nacionalnog parka Tara.
-              Visokoalkalna, bogata mineralima, direktno sa izvora do vase kuce.
+              Visokoalkalna, bogata mineralima, direktno sa izvora do vaše kuće.
             </p>
             <div className={styles.ctaActions}>
               <a
@@ -157,7 +144,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className={styles.ctaBtn}
               >
-                <span className={styles.ctaBtnText}>Narucite online</span>
+                <span className={styles.ctaBtnText}>Naručite online</span>
                 <span className={styles.ctaBtnArrow}>
                   <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true">
                     <path
@@ -169,7 +156,7 @@ export default function Footer() {
                     />
                   </svg>
                 </span>
-                <span className={styles.ctaShimmer} transform-origin="center" />
+                <span className={styles.ctaShimmer} aria-hidden="true" />
               </a>
               <a href="tel:+38163494238" className={styles.ctaPhone}>
                 <span className={styles.phoneLabel}>Kontakt telefon</span>
@@ -212,10 +199,10 @@ export default function Footer() {
             </div>
             <nav className={styles.navList}>
               {[
-                { name: "Pocetna", href: "#hero" },
+                { name: "Početna", href: "#hero" },
                 { name: "Ponuda", href: "#products" },
                 { name: "Kontakt", href: "#contact" },
-                { name: "Zvanicni sajt", href: "https://kremanska.rs/", external: true },
+                { name: "Zvanični sajt", href: "https://kremanska.rs/", external: true },
               ].map((item) => (
                 <a
                   key={item.name}
@@ -261,7 +248,7 @@ export default function Footer() {
         <div className={styles.bottomBar}>
           <div className={styles.bottomLeft}>
             <p className={styles.copy}>
-              &copy; {new Date().getFullYear()} Kremanska Voda. Sva prava zadrzana.
+              &copy; {new Date().getFullYear()} Kremanska Voda. Sva prava zadržana.
             </p>
           </div>
           <div className={styles.bottomRight}>

@@ -100,7 +100,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               data-magnetic
             >
-              Narucite online
+              Naručite online
             </a>
           </div>
         </div>
