@@ -1,21 +1,574 @@
-.section { position: relative; padding: 140px 0; background: var(--color-bg); overflow: hidden; }
-.header { text-align: center; max-width: 600px; margin: 0 auto 80px; }
-.label { font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--color-primary); text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 16px; }
-.title { font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px); font-weight: 700; color: var(--color-text); line-height: 1.15; letter-spacing: -1px; }
-.accent { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-.card { position: relative; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; opacity: 0; transform: translateY(30px); transition: all 0.6s var(--ease-out-expo); }
-.card.visible { opacity: 1; transform: translateY(0); }
-.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-.imgWrap { position: relative; height: 240px; overflow: hidden; }
-.img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out-expo); }
-.card:hover .img { transform: scale(1.08); }
-.overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.3) 100%); }
-.tag { position: absolute; top: 16px; left: 16px; padding: 6px 16px; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-radius: 50px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--color-primary); text-transform: uppercase; letter-spacing: 1px; }
-.body { padding: 28px; }
-.cardTitle { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--color-text); margin-bottom: 10px; }
-.cardDesc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 20px; }
-.readMore { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--color-primary); transition: gap 0.3s; }
-.card:hover .readMore { gap: 14px; }
-@media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } .section { padding: 100px 0; } }
-@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .section { padding: 80px 0; } }
+/* ============================================================
+   BENEFITS SECTION — Health Benefits Premium Design
+   ============================================================ */
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmerSlide {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.15); }
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+.section {
+  position: relative;
+  background: linear-gradient(180deg, #f8f9fc 0%, #ffffff 50%, #fafbfd 100%);
+  padding: clamp(100px, 14vh, 160px) 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(196, 163, 90, 0.05), transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(179, 33, 45, 0.04), transparent 35%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.18;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.ambientGlow1,
+.ambientGlow2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.ambientGlow1 {
+  top: 10%;
+  right: -10%;
+  width: min(75vw, 900px);
+  height: min(75vw, 900px);
+  background: radial-gradient(circle, rgba(196, 163, 90, 0.15), rgba(196, 163, 90, 0.08) 50%, transparent 70%);
+  animation: glowPulse 10s ease-in-out infinite;
+}
+
+.ambientGlow2 {
+  bottom: 10%;
+  left: -10%;
+  width: min(65vw, 800px);
+  height: min(65vw, 800px);
+  background: radial-gradient(circle, rgba(179, 33, 45, 0.12), rgba(179, 33, 45, 0.06) 50%, transparent 70%);
+  animation: glowPulse 12s ease-in-out infinite reverse;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+
+.header {
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto 80px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  color: var(--color-accent);
+}
+
+.eyebrowLine {
+  display: block;
+  width: 48px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--color-accent) 50%, var(--color-accent-light));
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(196, 163, 90, 0.4);
+  animation: lineGlowGold 3s ease-in-out infinite;
+}
+
+@keyframes lineGlowGold {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 12px rgba(196, 163, 90, 0.4); }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(196, 163, 90, 0.6); }
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  margin: 0 0 28px;
+}
+
+.titleAccent {
+  display: block;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light), var(--color-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Benefits Grid
+   ============================================================ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s 0.2s var(--ease-out-expo), transform 1s 0.2s var(--ease-out-expo);
+}
+
+.grid.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  padding: 44px 36px;
+  border-radius: 36px;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.94)),
+    rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 28px 56px rgba(17, 17, 34, 0.1),
+    0 12px 24px rgba(17, 17, 34, 0.06),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(28px) saturate(1.15);
+  -webkit-backdrop-filter: blur(28px) saturate(1.15);
+  transition: all 0.5s var(--ease-out-expo);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: fadeInUp 0.8s var(--ease-out-expo) forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.card:hover {
+  transform: translateY(-18px) scale(1.04);
+  box-shadow:
+    0 48px 96px rgba(17, 17, 34, 0.18),
+    0 24px 48px rgba(17, 17, 34, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+
+.card.primary {
+  border-color: rgba(179, 33, 45, 0.22);
+  box-shadow:
+    0 28px 56px rgba(179, 33, 45, 0.08),
+    0 12px 24px rgba(17, 17, 34, 0.06),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.card.primary:hover {
+  border-color: rgba(179, 33, 45, 0.4);
+  box-shadow:
+    0 48px 96px rgba(179, 33, 45, 0.24),
+    0 24px 48px rgba(179, 33, 45, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+
+.card.accent {
+  border-color: rgba(196, 163, 90, 0.22);
+  box-shadow:
+    0 28px 56px rgba(196, 163, 90, 0.08),
+    0 12px 24px rgba(17, 17, 34, 0.06),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.card.accent:hover {
+  border-color: rgba(196, 163, 90, 0.4);
+  box-shadow:
+    0 48px 96px rgba(196, 163, 90, 0.24),
+    0 24px 48px rgba(196, 163, 90, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+
+.cardGlow {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, currentColor, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.card.primary .cardGlow {
+  color: rgba(179, 33, 45, 0.08);
+}
+
+.card.accent .cardGlow {
+  color: rgba(196, 163, 90, 0.08);
+}
+
+.card:hover .cardGlow {
+  opacity: 1;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 26px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.8)),
+    rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 16px 40px rgba(17, 17, 34, 0.12),
+    0 6px 16px rgba(17, 17, 34, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.95);
+  transition: all 0.4s var(--ease-out-expo);
+  position: relative;
+  z-index: 1;
+}
+
+.card.primary .iconWrapper {
+  color: var(--color-primary);
+  border-color: rgba(179, 33, 45, 0.3);
+  box-shadow:
+    0 16px 40px rgba(179, 33, 45, 0.12),
+    0 6px 16px rgba(17, 17, 34, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.95);
+}
+
+.card.accent .iconWrapper {
+  color: var(--color-accent);
+  border-color: rgba(196, 163, 90, 0.3);
+  box-shadow:
+    0 16px 40px rgba(196, 163, 90, 0.12),
+    0 6px 16px rgba(17, 17, 34, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.95);
+}
+
+.card:hover .iconWrapper {
+  transform: scale(1.18) rotate(-5deg);
+  box-shadow:
+    0 24px 56px rgba(17, 17, 34, 0.2),
+    0 12px 28px rgba(17, 17, 34, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 1);
+  animation: iconFloat 2s ease-in-out infinite;
+}
+
+.card.primary:hover .iconWrapper {
+  background:
+    linear-gradient(135deg, rgba(179, 33, 45, 0.22), rgba(179, 33, 45, 0.14)),
+    rgba(255, 255, 255, 0.6);
+  border-color: rgba(179, 33, 45, 0.5);
+  box-shadow:
+    0 24px 56px rgba(179, 33, 45, 0.3),
+    0 12px 28px rgba(179, 33, 45, 0.18),
+    inset 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+.card.accent:hover .iconWrapper {
+  background:
+    linear-gradient(135deg, rgba(196, 163, 90, 0.22), rgba(196, 163, 90, 0.14)),
+    rgba(255, 255, 255, 0.6);
+  border-color: rgba(196, 163, 90, 0.5);
+  box-shadow:
+    0 24px 56px rgba(196, 163, 90, 0.3),
+    0 12px 28px rgba(196, 163, 90, 0.18),
+    inset 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.cardDesc {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.cardShimmer {
+  position: absolute;
+  inset: 0 -100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: shimmerSlide 3.5s infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover .cardShimmer {
+  opacity: 1;
+}
+
+/* ============================================================
+   CTA Section
+   ============================================================ */
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  padding: clamp(48px, 6vw, 72px) clamp(40px, 5vw, 64px);
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba(179, 33, 45, 0.08), rgba(196, 163, 90, 0.06));
+  border: 1px solid rgba(179, 33, 45, 0.15);
+  box-shadow:
+    0 30px 60px rgba(17, 17, 34, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s 0.4s var(--ease-out-expo), transform 1s 0.4s var(--ease-out-expo);
+}
+
+.cta.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 50%, rgba(179, 33, 45, 0.1), transparent 60%);
+  pointer-events: none;
+}
+
+.ctaContent {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin: 0 0 16px;
+}
+
+.ctaText {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 40px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 20px 40px rgba(179, 33, 45, 0.3);
+  transition: all 0.4s var(--ease-out-expo);
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.ctaButton:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 25px 50px rgba(179, 33, 45, 0.4);
+  background: var(--color-primary-light);
+}
+
+.ctaButton svg {
+  transition: transform 0.3s ease;
+}
+
+.ctaButton:hover svg {
+  transform: translateX(4px) translateY(-4px);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 80px 0;
+  }
+
+  .header {
+    margin-bottom: 60px;
+  }
+
+  .title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .card {
+    padding: 32px 24px;
+  }
+
+  .cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 40px 28px;
+    border-radius: 32px;
+  }
+
+  .ctaButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    gap: 10px;
+  }
+
+  .eyebrowLine {
+    width: 30px;
+  }
+
+  .card {
+    padding: 28px 20px;
+    border-radius: 24px;
+  }
+
+  .iconWrapper {
+    width: 64px;
+    height: 64px;
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  .cardDesc {
+    font-size: 0.92rem;
+  }
+
+  .cta {
+    padding: 32px 20px;
+    border-radius: 24px;
+  }
+
+  .ctaTitle {
+    font-size: 1.6rem;
+  }
+
+  .ctaText {
+    font-size: 0.98rem;
+  }
+
+  .ctaButton {
+    padding: 16px 32px;
+    font-size: 0.82rem;
+  }
+}
+
+/* Made with Bob */

@@ -68,12 +68,14 @@
 .videoOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 6, 7, 0.45) 0%,
-    rgba(5, 6, 7, 0.2) 40%,
-    rgba(5, 6, 7, 0.75) 100%
-  );
+  background:
+    radial-gradient(ellipse at center, transparent 0%, rgba(5, 6, 7, 0.3) 100%),
+    linear-gradient(
+      to bottom,
+      rgba(5, 6, 7, 0.5) 0%,
+      rgba(5, 6, 7, 0.2) 40%,
+      rgba(5, 6, 7, 0.8) 100%
+    );
   z-index: 2;
 }
 
@@ -146,29 +148,44 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  padding-top: 40px;
 }
 
 .topBadge {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 20px;
+  gap: 14px;
+  padding: 12px 24px;
   margin-bottom: 40px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06)),
+    rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   animation: slideDownFade 1.2s var(--ease-out-expo);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.topBadge:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .topBadge span {
   font-family: var(--font-heading);
-  font-size: 11px;
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .pulseDot {
@@ -261,10 +278,18 @@
 }
 
 .originNoteLine {
-  width: 44px;
-  height: 1px;
+  width: 48px;
+  height: 1.5px;
   flex-shrink: 0;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(223, 192, 125, 0.92));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), rgba(223, 192, 125, 0.95));
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(223, 192, 125, 0.3);
+  animation: lineGlow 3s ease-in-out infinite;
+}
+
+@keyframes lineGlow {
+  0%, 100% { opacity: 0.8; box-shadow: 0 0 12px rgba(223, 192, 125, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(223, 192, 125, 0.5); }
 }
 
 .originNoteText {
@@ -282,20 +307,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  padding: 32px 60px;
+  gap: 44px;
+  padding: 36px 64px;
   margin-bottom: 56px;
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  backdrop-filter: blur(28px) saturate(1.8);
-  -webkit-backdrop-filter: blur(28px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 40px;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06)),
+    linear-gradient(135deg, rgba(223, 192, 125, 0.03), transparent),
+    rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(32px) saturate(1.8);
+  -webkit-backdrop-filter: blur(32px) saturate(1.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 44px;
   animation: slideUpFade 1.6s var(--ease-out-expo) forwards;
   animation-delay: 0.6s;
   opacity: 0;
   box-shadow:
-    0 40px 80px -20px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 48px 96px -24px rgba(0, 0, 0, 0.5),
+    0 24px 48px -12px rgba(0, 0, 0, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
   width: min(100%, 820px);
@@ -328,13 +358,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(223, 192, 125, 0.06);
-  border: 1px solid rgba(223, 192, 125, 0.15);
+  background:
+    linear-gradient(135deg, rgba(223, 192, 125, 0.12), rgba(223, 192, 125, 0.06)),
+    rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(223, 192, 125, 0.2);
   color: #dfc07d;
   margin-bottom: -2px;
+  box-shadow:
+    0 4px 12px rgba(223, 192, 125, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.statBox:hover .statIcon {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow:
+    0 8px 20px rgba(223, 192, 125, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(223, 192, 125, 0.35);
 }
 
 .statVal {
@@ -357,9 +401,18 @@
 }
 
 .statSep {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  width: 1.5px;
+  height: 64px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(223, 192, 125, 0.2) 20%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(223, 192, 125, 0.2) 80%,
+    transparent
+  );
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(223, 192, 125, 0.15);
 }
 
 .ctaGroup {
@@ -409,23 +462,45 @@
 
 .mouse {
   position: relative;
-  width: 20px;
-  height: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.02);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.scrollPrompt:hover .mouse {
+  border-color: rgba(223, 192, 125, 0.6);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.25),
+    0 0 20px rgba(223, 192, 125, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .wheel {
   position: absolute;
-  top: 6px;
-  left: calc(50% - 1px);
-  width: 2px;
-  height: 6px;
-  border-radius: 1px;
+  top: 7px;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 7px;
+  border-radius: 2px;
   background: var(--color-primary-light);
-  box-shadow: 0 0 8px var(--color-primary);
+  box-shadow:
+    0 0 12px var(--color-primary),
+    0 0 24px rgba(223, 192, 125, 0.4);
   animation: mouseWheel 2s infinite ease-in-out;
+}
+
+.scrollPrompt:hover .wheel {
+  box-shadow:
+    0 0 16px var(--color-primary),
+    0 0 32px rgba(223, 192, 125, 0.6);
 }
 
 @keyframes drift {

@@ -47,11 +47,21 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+    <nav
+      className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}
+      role="navigation"
+      aria-label="Glavna navigacija"
+    >
       <div className={styles.inner}>
-        <a href="#hero" className={styles.logo} onClick={(e) => handleLinkClick(e, "#hero")} data-magnetic>
-          <div className={styles.logoIcon}>
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <a
+          href="#hero"
+          className={styles.logo}
+          onClick={(e) => handleLinkClick(e, "#hero")}
+          data-magnetic
+          aria-label="Kremanska voda - Početna stranica"
+        >
+          <div className={styles.logoIcon} aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kremanska voda logo">
               <path
                 d="M20 4.5C20 4.5 8.5 18 8.5 25.5C8.5 31.85 13.65 37 20 37C26.35 37 31.5 31.85 31.5 25.5C31.5 18 20 4.5 20 4.5Z"
                 fill="url(#logoDropGrad)"

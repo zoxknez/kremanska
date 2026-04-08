@@ -116,7 +116,7 @@ export default function Footer() {
                   data-magnetic
                 >
                   <span className={styles.mapLinkIcon}><MapViewIcon /></span>
-                  Otvori mapu
+                  Otvorite mapu
                 </a>
                 <a
                   href={locationDirectionsHref}

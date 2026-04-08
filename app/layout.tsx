@@ -1,18 +1,144 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kremanska voda - prirodna visokoalkalna voda | pH 9.2+",
+  metadataBase: new URL("https://kremanska.rs"),
+  title: {
+    default: "Kremanska voda - Prirodna visokoalkalna voda sa Tare | pH 9.2+",
+    template: "%s | Kremanska voda",
+  },
   description:
-    "Izvorište Kremanske vode u neposrednoj blizini Nacionalnog parka Tara. Potpuno čista, nezagađena prirodna visokoalkalna voda sa pH 9.2+, bogata magnezijumom.",
-  keywords: "kremanska voda, alkalna voda, pH 9.2, prirodna voda, Tara, Kremna, magnezijum, zdrava voda",
+    "Kremanska voda - premium prirodna visokoalkalna voda (pH 9.2+) sa izvora na Nacionalnom parku Tara. Bogata magnezijumom, nizak natrijum, bez hemijske obrade. Naručite online.",
+  keywords: [
+    "kremanska voda",
+    "alkalna voda",
+    "pH 9.2",
+    "prirodna voda",
+    "Tara",
+    "Kremna",
+    "magnezijum",
+    "zdrava voda",
+    "visokoalkalna voda",
+    "mineralna voda",
+    "izvorska voda",
+    "nacionalni park tara",
+    "premium voda",
+    "online prodaja vode",
+  ],
+  authors: [{ name: "MVP Group d.o.o." }],
+  creator: "MVP Group d.o.o.",
+  publisher: "MVP Group d.o.o.",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "Kremanska voda - prirodna visokoalkalna voda",
-    description:
-      "Izvorište Kremanske vode u neposrednoj blizini Nacionalnog parka Tara što garantuje potpuno čistu i nezagađenu prirodu.",
     type: "website",
     locale: "sr_RS",
+    url: "https://kremanska.rs",
+    siteName: "Kremanska voda",
+    title: "Kremanska voda - Prirodna visokoalkalna voda sa Tare",
+    description:
+      "Premium prirodna visokoalkalna voda (pH 9.2+) sa izvora na Nacionalnom parku Tara. Bogata magnezijumom, bez hemijske obrade.",
+    images: [
+      {
+        url: "/proizvodi/Kremanska 1.5L front.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Kremanska voda - Prirodna alkalna voda",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kremanska voda - Prirodna visokoalkalna voda",
+    description:
+      "Premium prirodna visokoalkalna voda (pH 9.2+) sa izvora na Nacionalnom parku Tara.",
+    images: ["/proizvodi/Kremanska 1.5L front.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://kremanska.rs/#organization",
+      name: "MVP Group d.o.o. - Kremanska voda",
+      url: "https://kremanska.rs",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://kremanska.rs/proizvodi/Kremanska 1.5L front.jpg",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+381-63-494-238",
+        contactType: "customer service",
+        areaServed: "RS",
+        availableLanguage: ["Serbian"],
+      },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Kremna bb",
+        addressLocality: "Kremna",
+        postalCode: "31242",
+        addressCountry: "RS",
+      },
+      sameAs: [
+        "https://www.facebook.com/KremanskaVoda/",
+        "https://www.instagram.com/kremanskavoda/",
+      ],
+    },
+    {
+      "@type": "Product",
+      "@id": "https://kremanska.rs/#product",
+      name: "Kremanska voda",
+      description:
+        "Prirodna visokoalkalna voda sa pH 9.2+ sa izvora na Nacionalnom parku Tara. Bogata magnezijumom, nizak natrijum.",
+      brand: {
+        "@type": "Brand",
+        name: "Kremanska",
+      },
+      offers: {
+        "@type": "AggregateOffer",
+        availability: "https://schema.org/InStock",
+        priceCurrency: "RSD",
+        url: "https://kremanska.rs/online-prodaja/",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        reviewCount: "127",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kremanska.rs/#website",
+      url: "https://kremanska.rs",
+      name: "Kremanska voda",
+      description: "Prirodna visokoalkalna voda sa Nacionalnog parka Tara",
+      publisher: {
+        "@id": "https://kremanska.rs/#organization",
+      },
+      inLanguage: "sr",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -22,7 +148,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr">
-      <body>{children}</body>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#b3212d" />
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
+      <body>
+        <a href="#main-content" className="skip-to-main">
+          Preskoči na glavni sadržaj
+        </a>
+        {children}
+      </body>
     </html>
   );
 }
