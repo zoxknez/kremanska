@@ -10,9 +10,15 @@ export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
   const [showPosterHero, setShowPosterHero] = useState(false);
   const [enableParallax, setEnableParallax] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.1 });
+    if (heroRef.current) observer.observe(heroRef.current);
+    
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const desktopQuery = window.matchMedia("(min-width: 768px)");
 
@@ -40,8 +46,35 @@ export default function Hero() {
       window.removeEventListener("scroll", handleScroll);
       reducedMotionQuery.removeEventListener("change", syncHeroMode);
       desktopQuery.removeEventListener("change", syncHeroMode);
+      observer.disconnect();
     };
   }, []);
+
+  const [phValue, setPhValue] = useState(0);
+  const [purityValue, setPurityValue] = useState(0);
+  const [hasStartedCounting, setHasStartedCounting] = useState(false);
+
+  useEffect(() => {
+    if (!isVisible || hasStartedCounting) return;
+    setHasStartedCounting(true);
+
+    const duration = 2000;
+    const startTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 4);
+
+      setPhValue(easeOut * 9.2);
+      setPurityValue(Math.floor(easeOut * 100));
+
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+
+    const delay = setTimeout(() => requestAnimationFrame(animate), 800);
+    return () => clearTimeout(delay);
+  }, [isVisible, hasStartedCounting]);
 
   const parallax = enableParallax ? scrollY * 0.45 : 0;
   const contentFade = enableParallax ? Math.max(0, 1 - scrollY / 700) : 1;
@@ -61,7 +94,10 @@ export default function Hero() {
             preload="metadata"
             className={styles.video}
             poster={heroPoster}
-            style={{ transform: `translateY(${parallax}px) scale(1.12)` }}
+            style={{ 
+              transform: `translateY(${parallax}px) scale(1.12)`,
+              "--parallax": `${parallax}px` 
+            } as any}
           >
             <source src="/video/5139026-uhd_3840_2160_30fps.mp4" type="video/mp4" />
           </video>
@@ -89,25 +125,25 @@ export default function Hero() {
 
           {/* Title */}
           <h1 className={styles.title}>
-            <span className={styles.titleMain} data-reveal="1">Kremanska</span>
-            <span className={styles.titleSub} data-reveal="2">Voda</span>
+            <span className={styles.titleMain} style={{ animationDelay: "0.2s" }}>Kremanska</span>
+            <span className={styles.titleSub} style={{ animationDelay: "0.4s" }}>Voda</span>
           </h1>
 
           {/* Subtitle */}
-          <p className={styles.subtitle}>
+          <p className={styles.subtitle} style={{ animationDelay: "0.6s" }}>
             Čista esencija prirode u svakoj kapi. Iz srca netaknute planine,
             direktno do vaše svakodnevne ravnoteže.
           </p>
 
           {/* Stats strip */}
-          <div className={styles.stats}>
+          <div className={styles.stats} style={{ animationDelay: "0.8s" }}>
             <div className={styles.stat}>
-              <span className={styles.statValue}>9.2+</span>
+              <span className={styles.statValue}>{phValue.toFixed(1)}+</span>
               <span className={styles.statLabel}>pH vrednost</span>
             </div>
             <div className={styles.statDiv} />
             <div className={styles.stat}>
-              <span className={styles.statValue}>100%</span>
+              <span className={styles.statValue}>{purityValue}%</span>
               <span className={styles.statLabel}>Prirodna</span>
             </div>
             <div className={styles.statDiv} />
@@ -119,7 +155,7 @@ export default function Hero() {
           </div>
 
           {/* CTA */}
-          <div className={styles.ctas}>
+          <div className={styles.ctas} style={{ animationDelay: "1s" }}>
             <button
               className={styles.ctaPrimary}
               onClick={() =>

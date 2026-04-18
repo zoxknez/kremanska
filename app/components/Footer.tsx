@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import styles from "./Footer.module.css";
 
 const locationQuery = "Kremanska voda, MVP Group d.o.o., Kremna bb, 31242 Kremna, Srbija";
@@ -11,8 +12,19 @@ const locationDirectionsHref =
   `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationQuery)}&travelmode=driving`;
 
 export default function Footer() {
+  const [isVisible, setIsVisible] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.1 });
+    if (footerRef.current) observer.observe(footerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer id="contact" className={styles.footer}>
+    <footer id="contact" className={styles.footer} ref={footerRef}>
       <div className={styles.topGlow} aria-hidden="true" />
 
       <div className={styles.inner}>
@@ -186,7 +198,9 @@ export default function Footer() {
       </div>
 
       {/* Watermark */}
-      <div className={styles.watermark} aria-hidden="true">KREMANSKA</div>
+      <div className={`${styles.watermark} ${isVisible ? styles.watermarkVisible : ""}`} aria-hidden="true">
+        KREMANSKA
+      </div>
     </footer>
   );
 }

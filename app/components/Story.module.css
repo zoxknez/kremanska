@@ -382,6 +382,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 48px;
+  perspective: 1200px;
 }
 
 .gridVisible .card {
@@ -405,17 +406,32 @@
     inset 0 1px 0 rgba(255, 255, 255, 1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: all 0.4s var(--ease-out-expo);
+  transition: all 0.5s var(--ease-out-expo);
   overflow: hidden;
   opacity: 0;
+  transform-style: preserve-3d;
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px) rotateX(4deg) rotateY(-2deg);
   box-shadow:
-    0 24px 56px rgba(17, 17, 34, 0.12),
-    0 10px 24px rgba(17, 17, 34, 0.08),
+    0 32px 64px rgba(17, 17, 34, 0.14),
+    0 12px 28px rgba(17, 17, 34, 0.08),
     inset 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.card:hover::after {
+  transform: translateX(100%);
 }
 
 /* Card color variants */
@@ -424,10 +440,10 @@
 }
 
 .card.primary:hover {
-  border-color: rgba(179, 33, 45, 0.3);
+  border-color: rgba(179, 33, 45, 0.35);
   box-shadow:
-    0 24px 56px rgba(179, 33, 45, 0.12),
-    0 10px 24px rgba(179, 33, 45, 0.07),
+    0 32px 64px rgba(179, 33, 45, 0.12),
+    0 12px 28px rgba(179, 33, 45, 0.07),
     inset 0 2px 0 rgba(255, 255, 255, 1);
 }
 

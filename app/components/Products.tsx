@@ -403,8 +403,8 @@ export default function Products() {
                       opacity: index === activeIndex ? 1 : 0,
                       transform:
                         index === activeIndex
-                          ? "translate3d(calc(-50% + var(--bottle-shift-x, 0px)), 0, 0)"
-                          : "translate3d(calc(-50% + var(--bottle-shift-x, 0px)), 30px, 0)",
+                          ? "translate3d(calc(-50% + var(--bottle-shift-x, 0px)), 0, 0) scale(1)"
+                          : "translate3d(calc(-50% + var(--bottle-shift-x, 0px)), 40px, 0) scale(0.92)",
                       "--parallax-x": `${mousePos.x * 15}px`,
                       "--parallax-y": `${mousePos.y * 15}px`,
                     } as CSSProperties

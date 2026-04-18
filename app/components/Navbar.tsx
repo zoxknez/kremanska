@@ -10,11 +10,14 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0); // 0 to 1
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const progress = Math.min(window.scrollY / 180, 1);
+      setScrollProgress(progress);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -48,7 +51,12 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}
+      className={`${styles.navbar} ${scrollProgress > 0.1 ? styles.scrolled : ""}`}
+      style={{
+        "--nav-bg-opacity": scrollProgress * 0.82,
+        "--nav-blur": `${scrollProgress * 24}px`,
+        "--nav-border-opacity": scrollProgress * 0.12,
+      } as any}
       role="navigation"
       aria-label="Glavna navigacija"
     >
