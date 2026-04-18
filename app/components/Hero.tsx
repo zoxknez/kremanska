@@ -50,32 +50,6 @@ export default function Hero() {
     };
   }, []);
 
-  const [phValue, setPhValue] = useState(0);
-  const [purityValue, setPurityValue] = useState(0);
-  const [hasStartedCounting, setHasStartedCounting] = useState(false);
-
-  useEffect(() => {
-    if (!isVisible || hasStartedCounting) return;
-    setHasStartedCounting(true);
-
-    const duration = 2000;
-    const startTime = performance.now();
-
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easeOut = 1 - Math.pow(1 - progress, 4);
-
-      setPhValue(easeOut * 9.2);
-      setPurityValue(Math.floor(easeOut * 100));
-
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-
-    const delay = setTimeout(() => requestAnimationFrame(animate), 800);
-    return () => clearTimeout(delay);
-  }, [isVisible, hasStartedCounting]);
-
   const parallax = enableParallax ? scrollY * 0.45 : 0;
   const contentFade = enableParallax ? Math.max(0, 1 - scrollY / 700) : 1;
 
@@ -94,21 +68,11 @@ export default function Hero() {
             preload="metadata"
             className={styles.video}
             poster={heroPoster}
-            style={{ 
-              transform: `translateY(${parallax}px) scale(1.12)`,
-              "--parallax": `${parallax}px` 
-            } as any}
           >
             <source src="/video/5139026-uhd_3840_2160_30fps.mp4" type="video/mp4" />
           </video>
         )}
         <div className={styles.overlay} />
-      </div>
-
-      {/* ── Mist layers ── */}
-      <div className={styles.mistLayer} style={{ opacity: showPosterHero ? 0.4 : Math.max(0, 1 - scrollY / 500) }}>
-        <div className={styles.mist1} />
-        <div className={styles.mist2} />
       </div>
 
       {/* ── Content ── */}
@@ -136,14 +100,14 @@ export default function Hero() {
           </p>
 
           {/* Stats strip */}
-          <div className={styles.stats} style={{ animationDelay: "0.8s" }}>
+          <div className={styles.stats}>
             <div className={styles.stat}>
-              <span className={styles.statValue}>{phValue.toFixed(1)}+</span>
+              <span className={styles.statValue}>9.2+</span>
               <span className={styles.statLabel}>pH vrednost</span>
             </div>
             <div className={styles.statDiv} />
             <div className={styles.stat}>
-              <span className={styles.statValue}>{purityValue}%</span>
+              <span className={styles.statValue}>100%</span>
               <span className={styles.statLabel}>Prirodna</span>
             </div>
             <div className={styles.statDiv} />
