@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import styles from "./Navbar.module.css";
 
 const navLinks = [
@@ -12,6 +12,11 @@ const navLinks = [
 export default function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0); // 0 to 1
   const [menuOpen, setMenuOpen] = useState(false);
+  const navStyle: CSSProperties = {
+    "--nav-bg-opacity": scrollProgress * 0.82,
+    "--nav-blur": `${scrollProgress * 24}px`,
+    "--nav-border-opacity": scrollProgress * 0.12,
+  } as CSSProperties;
 
   useEffect(() => {
     const onScroll = () => {
@@ -27,6 +32,21 @@ export default function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, [menuOpen]);
 
   useEffect(() => {
@@ -52,11 +72,7 @@ export default function Navbar() {
   return (
     <nav
       className={`${styles.navbar} ${scrollProgress > 0.1 ? styles.scrolled : ""}`}
-      style={{
-        "--nav-bg-opacity": scrollProgress * 0.82,
-        "--nav-blur": `${scrollProgress * 24}px`,
-        "--nav-border-opacity": scrollProgress * 0.12,
-      } as any}
+      style={navStyle}
       role="navigation"
       aria-label="Glavna navigacija"
     >

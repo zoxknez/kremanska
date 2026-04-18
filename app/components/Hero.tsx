@@ -1,31 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Hero.module.css";
+import { usePreferLightMedia } from "./usePreferLightMedia";
 
 const heroPoster =
   "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=1920";
 
 export default function Hero() {
+  const preferLightMedia = usePreferLightMedia();
   const [scrollY, setScrollY] = useState(0);
-  const [showPosterHero, setShowPosterHero] = useState(false);
   const [enableParallax, setEnableParallax] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsVisible(true);
-    }, { threshold: 0.1 });
-    if (heroRef.current) observer.observe(heroRef.current);
-    
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const desktopQuery = window.matchMedia("(min-width: 768px)");
+    const desktopQuery = window.matchMedia("(min-width: 960px)");
 
     const syncHeroMode = () => {
-      const shouldShowPoster = reducedMotionQuery.matches;
-      const shouldEnableParallax = desktopQuery.matches && !shouldShowPoster;
-      setShowPosterHero(shouldShowPoster);
+      const shouldEnableParallax = desktopQuery.matches && !preferLightMedia;
       setEnableParallax(shouldEnableParallax);
       if (!shouldEnableParallax) setScrollY(0);
     };
@@ -33,45 +24,37 @@ export default function Hero() {
     syncHeroMode();
 
     const handleScroll = () => {
-      if (desktopQuery.matches && !reducedMotionQuery.matches) {
+      if (desktopQuery.matches && !preferLightMedia) {
         setScrollY(window.scrollY);
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    reducedMotionQuery.addEventListener("change", syncHeroMode);
     desktopQuery.addEventListener("change", syncHeroMode);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      reducedMotionQuery.removeEventListener("change", syncHeroMode);
       desktopQuery.removeEventListener("change", syncHeroMode);
-      observer.disconnect();
     };
-  }, []);
-
-  const parallax = enableParallax ? scrollY * 0.45 : 0;
+  }, [preferLightMedia]);
   const contentFade = enableParallax ? Math.max(0, 1 - scrollY / 700) : 1;
 
   return (
-    <section id="hero" className={styles.hero} ref={heroRef}>
-      {/* ── Video / Poster background ── */}
+    <section id="hero" className={styles.hero}>
+      {/* ── Video background ── */}
       <div className={styles.videoCapture}>
-        {showPosterHero ? (
-          <div className={styles.posterFrame} style={{ backgroundImage: `url(${heroPoster})` }} />
-        ) : (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className={styles.video}
-            poster={heroPoster}
-          >
-            <source src="/video/5139026-uhd_3840_2160_30fps.mp4" type="video/mp4" />
-          </video>
-        )}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className={styles.video}
+          poster={heroPoster}
+          aria-hidden="true"
+        >
+          <source src="/video/5139026-uhd_3840_2160_30fps.mp4" type="video/mp4" />
+        </video>
         <div className={styles.overlay} />
       </div>
 
@@ -120,24 +103,21 @@ export default function Hero() {
 
           {/* CTA */}
           <div className={styles.ctas} style={{ animationDelay: "1s" }}>
-            <button
+            <a
               className={styles.ctaPrimary}
-              onClick={() =>
-                window.open("https://kremanska.rs/online-prodaja/", "_blank", "noopener,noreferrer")
-              }
+              href="https://kremanska.rs/online-prodaja/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>Naručite online</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M7 17L17 7" />
                 <path d="M7 7h10v10" />
               </svg>
-            </button>
-            <button
-              className={styles.ctaSecondary}
-              onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
-            >
+            </a>
+            <a className={styles.ctaSecondary} href="#products">
               Pogledajte ponudu
-            </button>
+            </a>
           </div>
         </div>
       </div>

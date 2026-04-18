@@ -1,6 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Inter, Outfit, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-heading",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kremanska.rs"),
@@ -72,6 +91,11 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#b3212d",
+  colorScheme: "light",
 };
 
 const structuredData = {
@@ -147,18 +171,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sr">
+    <html
+      lang="sr"
+      className={`${inter.variable} ${outfit.variable} ${playfairDisplay.variable}`}
+    >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#b3212d" />
         <Script
           id="structured-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body>
+      <body className={inter.className}>
         <a href="#main-content" className="skip-to-main">
           Preskoči na glavni sadržaj
         </a>

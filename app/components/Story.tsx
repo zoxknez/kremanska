@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "./Story.module.css";
+import { usePreferLightMedia } from "./usePreferLightMedia";
+
+const storyPoster =
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=1200";
 
 /* ── Icons ───────────────────────────────────────────────── */
 
@@ -86,6 +90,7 @@ const benefits = [
 /* ── Component ───────────────────────────────────────────── */
 
 export default function Story() {
+  const preferLightMedia = usePreferLightMedia();
   const [isVisible, setIsVisible] = useState(false);
   const [cardsVisible, setCardsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -135,17 +140,25 @@ export default function Story() {
         <div className={`${styles.heroRow} ${isVisible ? styles.visible : ""}`}>
           <div className={styles.videoCard}>
             <div className={styles.imageOverlay} />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className={styles.video}
-              poster="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=1200"
-            >
-              <source src="/video/tara/tara_video.mp4" type="video/mp4" />
-            </video>
+            {preferLightMedia ? (
+              <div
+                className={styles.posterFrame}
+                style={{ backgroundImage: `url(${storyPoster})` }}
+              />
+            ) : (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className={styles.video}
+                poster={storyPoster}
+                aria-hidden="true"
+              >
+                <source src="/video/tara/tara_video.mp4" type="video/mp4" />
+              </video>
+            )}
             {/* Origin pills overlay */}
             <div className={styles.originPills}>
               {originPills.map(({ Icon, label }) => (

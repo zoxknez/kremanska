@@ -28,8 +28,8 @@ export default function BrandBridge() {
         <div className={`${styles.content} ${isVisible ? styles.reveal : ""}`}>
           <span className={styles.preTitle}>Iskonsko nasleđe</span>
           <h2 className={styles.quote}>
-            "Tamo gde se nebo spaja sa zemljom, <br />
-            izvire <span className={styles.italic}>bistrina</span> koja pamti vekove."
+            &ldquo;Tamo gde se nebo spaja sa zemljom, <br />
+            izvire <span className={styles.italic}>bistrina</span> koja pamti vekove.&rdquo;
           </h2>
           <div className={styles.divider}>
             <div className={styles.line} />

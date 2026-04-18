@@ -393,7 +393,6 @@ export default function Products() {
                   width={product.intrinsicWidth}
                   height={product.intrinsicHeight}
                   sizes="(max-width: 480px) 210px, (max-width: 768px) 240px, (max-width: 1100px) 320px, 432px"
-                  priority={product.id === "1.5L"}
                   className={`${styles.bottle} ${index === activeIndex ? styles.bottleActive : ""}`}
                   style={
                     {

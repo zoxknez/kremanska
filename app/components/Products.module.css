@@ -1319,6 +1319,10 @@
   .stageChip {
     padding: 7px 14px;
     font-size: 0.56rem;
+    max-width: 100%;
+    white-space: normal;
+    justify-content: center;
+    text-align: center;
   }
 
   .bottleWrap {
@@ -1350,7 +1354,11 @@
   }
 
   .stageSignatureLabel { font-size: 0.52rem; }
-  .stageSignatureValue { font-size: 0.68rem; }
+  .stageSignatureValue {
+    font-size: 0.68rem;
+    max-width: none;
+    text-align: center;
+  }
 
   .infoPanel {
     gap: 16px;
@@ -1382,7 +1390,7 @@
   }
 
   .productDesc {
-    max-width: 32ch;
+    max-width: 36ch;
     font-size: 0.88rem;
     text-align: center;
   }
@@ -1404,6 +1412,12 @@
 
   .featureTags { justify-content: center; }
 
+  .featureTag {
+    white-space: normal;
+    justify-content: center;
+    text-align: center;
+  }
+
   .featureHead {
     flex-direction: column;
     align-items: center;
@@ -1416,8 +1430,19 @@
     gap: 10px;
   }
 
-  .cta { width: 100%; justify-content: center; }
-  .originChip { margin-left: 0; justify-content: center; }
+  .cta {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .originChip {
+    margin-left: 0;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1449,6 +1474,16 @@
   .featureTagIconWrap { width: 18px; height: 18px; }
 
   .cta { padding: 12px 22px; font-size: 0.72rem; }
+}
+
+@media (max-width: 420px) {
+  .specsList {
+    grid-template-columns: 1fr;
+  }
+
+  .specItem {
+    min-height: 96px;
+  }
 }
 
 @media (hover: none) {

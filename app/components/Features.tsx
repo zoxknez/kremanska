@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "./Features.module.css";
 
 const features = [
@@ -73,7 +74,11 @@ const features = [
     text: "Izvire na idealnoj nadmorskoj visini nacionalnog parka Tara.",
     color: "#0d9488",
   },
-];
+] as const;
+
+type FeatureCardStyle = CSSProperties & {
+  "--feature-color": string;
+};
 
 export default function Features() {
   const [isVisible, setIsVisible] = useState(false);
@@ -82,26 +87,32 @@ export default function Features() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
       },
       { threshold: 0.1 }
     );
-    if (containerRef.current) observer.observe(containerRef.current);
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
     return () => observer.disconnect();
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const card = event.currentTarget;
     const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
     card.style.setProperty("--mouse-x", `${x}px`);
     card.style.setProperty("--mouse-y", `${y}px`);
   };
 
   return (
     <section id="characteristics" className={styles.section} ref={containerRef}>
-      {/* Dynamic Background */}
       <div className={styles.backgroundMesh}>
         <div className={styles.blob1} />
         <div className={styles.blob2} />
@@ -115,8 +126,8 @@ export default function Features() {
           </h2>
           <div className={styles.quoteWrapper}>
             <p className={styles.quote}>
-              "Voda je jedna od najistraženijih supstanci, ali još uvek je najmanje shvaćena...
-              Ništa nije kompleksno kao njeno ponašanje."
+              &ldquo;Voda je jedna od najistraženijih supstanci, ali još uvek je
+              najmanje shvaćena... Ništa nije kompleksno kao njeno ponašanje.&rdquo;
             </p>
           </div>
         </header>
@@ -126,10 +137,12 @@ export default function Features() {
             <div
               key={idx}
               className={`${styles.glassCard} ${isVisible ? styles.visible : ""}`}
-              style={{
-                transitionDelay: `${idx * 0.1}s`,
-                ["--feature-color" as any]: feature.color,
-              } as any}
+              style={
+                {
+                  transitionDelay: `${idx * 0.1}s`,
+                  "--feature-color": feature.color,
+                } as FeatureCardStyle
+              }
               onMouseMove={handleMouseMove}
             >
               <div className={styles.cardIridescent} />
