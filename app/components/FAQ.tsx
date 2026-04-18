@@ -1,31 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "./FAQ.module.css";
-
-const PlusIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
-    <path
-      d="M12 5v14M5 12h14"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const MinusIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
-    <path
-      d="M5 12h14"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 const faqs = [
   {
@@ -78,17 +54,11 @@ export default function FAQ() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -98,55 +68,82 @@ export default function FAQ() {
 
   return (
     <section id="faq" className={styles.section} ref={sectionRef}>
-      <div className={styles.ambientGlow} aria-hidden="true" />
+      <div className={styles.ambientBlob1} aria-hidden="true" />
+      <div className={styles.ambientBlob2} aria-hidden="true" />
 
       <div className={`${styles.container} container-custom`}>
-        <div className={`${styles.header} ${isVisible ? styles.visible : ""}`}>
-          <span className={styles.eyebrow}>
-            <span className={styles.eyebrowLine} />
-            Često postavljana pitanja
-          </span>
-          <h2 className={styles.title}>
-            Sve što treba da znate o <span className={styles.titleAccent}>Kremanskoj vodi</span>
-          </h2>
-          <p className={styles.lead}>
-            Odgovori na najčešća pitanja o našoj prirodnoj alkalnoj vodi, 
-            izvoru, zdravstvenim prednostima i načinu naručivanja.
-          </p>
-        </div>
+        <div className={styles.layout}>
+          {/* ── Left: sticky header ── */}
+          <div className={`${styles.sidebar} ${isVisible ? styles.visible : ""}`}>
+            <span className={styles.eyebrow}>
+              <span className={styles.eyebrowDot} />
+              Često postavljana pitanja
+            </span>
+            <h2 className={styles.title}>
+              Sve što treba da znate o{" "}
+              <span className={styles.titleAccent}>Kremanskoj vodi</span>
+            </h2>
+            <p className={styles.lead}>
+              Odgovori na najčešća pitanja o našoj prirodnoj alkalnoj vodi,
+              izvoru, prednostima i naručivanju.
+            </p>
 
-        <div className={`${styles.faqList} ${isVisible ? styles.visible : ""}`}>
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className={`${styles.faqItem} ${openIndex === index ? styles.open : ""}`}
-              style={{ "--delay": `${index * 60}ms` } as React.CSSProperties}
-            >
-              <button
-                className={styles.faqButton}
-                onClick={() => toggleFAQ(index)}
-                aria-expanded={openIndex === index}
-                aria-controls={`faq-answer-${index}`}
+            {/* Quick contact card (New Part the User Liked) */}
+            <div className={styles.contact}>
+              <span className={styles.contactLabel}>Imate dodatno pitanje?</span>
+              <a href="tel:+381634942380" className={styles.contactLink}>
+                <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                +381 63 494 238
+              </a>
+              <a
+                href="https://kremanska.rs/online-prodaja/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactBtn}
               >
-                <span className={styles.faqQuestion}>{faq.question}</span>
-                <span className={styles.faqIcon} aria-hidden="true">
-                  {openIndex === index ? <MinusIcon /> : <PlusIcon />}
-                </span>
-              </button>
-              <div
-                id={`faq-answer-${index}`}
-                className={styles.faqAnswer}
-                role="region"
-                aria-labelledby={`faq-question-${index}`}
-              >
-                <p>{faq.answer}</p>
-              </div>
+                <span>Naručite online</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </a>
             </div>
-          ))}
+          </div>
+
+          {/* ── Right: accordion (Restored to "Perfect" Original State) ── */}
+          <div className={`${styles.accordion} ${isVisible ? styles.visible : ""}`}>
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className={`${styles.item} ${openIndex === index ? styles.open : ""}`}
+                style={{ "--item-delay": `${index * 60}ms` } as CSSProperties}
+              >
+                <button
+                  className={styles.itemBtn}
+                  onClick={() => toggleFAQ(index)}
+                  aria-expanded={openIndex === index}
+                >
+                  <span className={styles.itemNum}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className={styles.itemQuestion}>{faq.question}</span>
+                  <span className={styles.itemToggle} aria-hidden="true">
+                    <span className={styles.toggleBar} />
+                    <span className={`${styles.toggleBar} ${styles.toggleBarV}`} />
+                  </span>
+                </button>
+                <div className={styles.itemAnswer}>
+                  <div className={styles.answerInner}>
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
-// Made with Bob
