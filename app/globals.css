@@ -96,6 +96,11 @@ main {
   overflow-x: clip;
 }
 
+/* Ensure anchor jumps account for fixed navbar */
+section[id] {
+  scroll-margin-top: var(--header-offset);
+}
+
 h1,
 h2,
 h3,
@@ -322,7 +327,9 @@ button:focus-visible {
   }
   
   /* Enhanced touch targets for mobile */
-  a, button {
+  button,
+  .btn-primary,
+  .btn-secondary {
     min-height: 44px;
     min-width: 44px;
   }

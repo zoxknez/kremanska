@@ -143,6 +143,15 @@
   transform-origin: right;
 }
 
+.linkActive {
+  color: #ffffff;
+}
+
+.linkActive::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 .link:hover {
   color: #ffffff;
 }
@@ -249,6 +258,7 @@
     background: rgba(10, 10, 16, 0.34);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    cursor: pointer;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -280,6 +290,7 @@
     max-height: min(72vh, 560px);
     overflow-y: auto;
     overscroll-behavior: contain;
+    cursor: auto;
   }
 
   .mobileEyebrow {
@@ -318,6 +329,13 @@
     text-align: center;
     font-size: 0.85rem;
     background: var(--color-primary);
+  }
+}
+
+@media (hover: none) {
+  .link:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.04);
   }
 }
 

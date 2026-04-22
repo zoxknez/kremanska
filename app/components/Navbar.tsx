@@ -5,13 +5,16 @@ import styles from "./Navbar.module.css";
 
 const navLinks = [
   { label: "Naslovna", href: "#hero" },
+  { label: "O vodi", href: "#about" },
   { label: "Ponuda", href: "#products" },
+  { label: "FAQ", href: "#faq" },
   { label: "Kontakt", href: "#contact" },
 ];
 
 export default function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0); // 0 to 1
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState<string>("#hero");
   const navStyle: CSSProperties = {
     "--nav-bg-opacity": scrollProgress * 0.82,
     "--nav-blur": `${scrollProgress * 24}px`,
@@ -25,6 +28,33 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const ids = navLinks
+      .map((link) => link.href)
+      .filter((href) => href.startsWith("#"))
+      .map((href) => href.slice(1));
+    const targets = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Prefer the most visible intersecting section.
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+        if (!visible?.target) return;
+        setActiveHref(`#${(visible.target as HTMLElement).id}`);
+      },
+      { rootMargin: "-35% 0px -55% 0px", threshold: [0.05, 0.1, 0.2, 0.35, 0.5] }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -112,14 +142,19 @@ export default function Navbar() {
           <span className={styles.logoText}>Kremanska</span>
         </a>
 
-        <div className={`${styles.links} ${menuOpen ? styles.open : ""}`} id="mobile-navigation">
-          <div className={styles.mobilePanel}>
+        <div
+          className={`${styles.links} ${menuOpen ? styles.open : ""}`}
+          id="mobile-navigation"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden={!menuOpen}
+        >
+          <div className={styles.mobilePanel} onClick={(e) => e.stopPropagation()}>
             <div className={styles.mobileEyebrow}>Navigacija</div>
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={styles.link}
+                className={`${styles.link} ${activeHref === link.href ? styles.linkActive : ""}`}
                 onClick={(e) => handleLinkClick(e, link.href)}
                 data-magnetic
               >

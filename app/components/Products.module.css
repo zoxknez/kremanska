@@ -1,5 +1,5 @@
 /* ============================================================
-   Products Section — Premium Showcase (Full Presence)
+   Products Section - Premium Showcase (Full Presence)
    ============================================================ */
 
 @keyframes orbPulse {
@@ -48,15 +48,20 @@
   100% { background-position: 200% center; }
 }
 
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 8px 24px rgba(24, 28, 45, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+  50% { box-shadow: 0 12px 30px rgba(179, 33, 45, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.75); }
+}
+
 /* ============================================================
-   Section — generous, breathing layout
+   Section - generous, breathing layout
    ============================================================ */
 
 .section {
   position: relative;
   background: linear-gradient(180deg, #fdfcfb 0%, #ffffff 40%, #fbfbfd 100%);
   overflow: hidden;
-  padding: clamp(100px, 12vh, 140px) 0 clamp(80px, 10vh, 120px);
+  padding: clamp(12px, 2vh, 24px) 0 clamp(80px, 10vh, 120px);
   scroll-margin-top: 84px;
 }
 
@@ -72,7 +77,15 @@
 }
 
 .section::after {
-  display: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 1320px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(179, 33, 45, 0.14), transparent);
+  pointer-events: none;
 }
 
 .waterDropsLayer { display: none; }
@@ -109,6 +122,8 @@
 .sectionLabel {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-top: -6px;
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
@@ -123,27 +138,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-align: center;
 }
 
 .sectionLabelBadge {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 20px;
+  gap: 11px;
+  padding: 9px 22px;
   border-radius: 999px;
-  border: 1px solid rgba(179, 33, 45, 0.12);
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 16px rgba(24, 28, 45, 0.05);
+  border: 1px solid rgba(179, 33, 45, 0.2);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 8px 24px rgba(24, 28, 45, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   font-family: var(--font-heading);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-primary);
+  animation: badgeGlow 6.4s ease-in-out infinite;
 }
 
 .sectionLabelGroup {
@@ -163,24 +181,26 @@
 
 .sectionLabelText {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.1rem, 3.8vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--color-text);
+  text-wrap: balance;
+  text-shadow: 0 2px 10px rgba(24, 28, 45, 0.08);
 }
 
 .sectionLabelNote {
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.86rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   color: var(--color-text-secondary);
-  opacity: 0.6;
+  opacity: 0.82;
 }
 
 /* ============================================================
-   Layout grid — generous
+   Layout grid - generous
    ============================================================ */
 
 .layout {
@@ -188,11 +208,11 @@
   grid-template-columns: 1.05fr 1fr;
   gap: clamp(28px, 3.5vw, 56px);
   align-items: stretch;
-  padding-top: clamp(32px, 4vh, 48px);
+  padding-top: clamp(18px, 2.4vh, 28px);
 }
 
 /* ============================================================
-   Left — Stage / Bottle panel
+   Left - Stage / Bottle panel
    ============================================================ */
 
 .stage {
@@ -409,12 +429,12 @@
   border-radius: 50%;
   background: var(--color-primary);
   box-shadow: 0 0 5px rgba(179, 33, 45, 0.35);
-  animation: dotBlink 2.4s ease-in-out infinite;
+  animation: dotBlink 3.2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 /* ============================================================
-   Bottle display — fills remaining space generously
+   Bottle display - fills remaining space generously
    ============================================================ */
 
 .bottleWrap {
@@ -582,6 +602,11 @@
   background: rgba(179, 33, 45, 0.04);
 }
 
+.sizeTab:active {
+  transform: scale(0.98);
+  transition: transform 0.08s ease;
+}
+
 .sizeTabActive {
   background: linear-gradient(135deg, var(--color-primary) 0%, #d04050 100%);
   color: #ffffff;
@@ -649,7 +674,7 @@
 }
 
 /* ============================================================
-   Right — Info panel
+   Right - Info panel
    ============================================================ */
 
 .infoPanel {
@@ -736,7 +761,7 @@
   width: 4px; height: 4px;
   border-radius: 50%;
   background: var(--color-primary);
-  animation: dotBlink 3s ease-in-out infinite;
+  animation: dotBlink 3.2s ease-in-out infinite;
 }
 
 .volumeBadge {
@@ -877,7 +902,7 @@
   border-radius: 50%;
   background: currentColor;
   flex-shrink: 0;
-  animation: dotBlink 2.5s ease-in-out infinite;
+  animation: dotBlink 3.2s ease-in-out infinite;
 }
 
 .specsList {
@@ -1189,6 +1214,11 @@
   box-shadow: 0 16px 40px rgba(179, 33, 45, 0.24);
 }
 
+.cta:active {
+  transform: translateY(0) scale(0.99);
+  transition: transform 0.08s ease;
+}
+
 .cta:hover .ctaArrowWrap {
   transform: translateX(5px);
 }
@@ -1279,17 +1309,17 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 80px 0 64px;
+    padding: 24px 0 52px;
   }
 
-  .sectionLabelShell { gap: 6px; }
-  .sectionLabelBadge { padding: 6px 14px; font-size: 0.56rem; }
-  .sectionLabelText { font-size: 1.4rem; }
-  .sectionLabelNote { font-size: 0.64rem; }
+  .sectionLabelShell { gap: 9px; }
+  .sectionLabelBadge { padding: 8px 16px; font-size: 0.6rem; letter-spacing: 0.18em; }
+  .sectionLabelText { font-size: 2.15rem; line-height: 1.06; }
+  .sectionLabelNote { font-size: 0.8rem; opacity: 0.85; }
 
   .layout {
-    gap: 24px;
-    padding-top: 20px;
+    gap: 20px;
+    padding-top: 8px;
   }
 
   .stagePanel {
@@ -1446,7 +1476,16 @@
 }
 
 @media (max-width: 480px) {
-  .section { padding: 60px 0 48px; }
+  .section { padding: 16px 0 40px; }
+
+  .sectionLabel { margin-top: -2px; }
+
+  .sectionLabelShell { gap: 8px; }
+  .sectionLabelBadge { padding: 7px 14px; font-size: 0.54rem; letter-spacing: 0.16em; }
+  .sectionLabelText { font-size: 1.9rem; line-height: 1.07; }
+  .sectionLabelNote { font-size: 0.74rem; opacity: 0.84; }
+
+  .layout { padding-top: 6px; }
 
   .stagePanel { padding: 10px; border-radius: 22px; }
   .stageTitle { font-size: 1.6rem; }
@@ -1462,12 +1501,19 @@
   .productName { font-size: 2rem; }
   .productDesc { font-size: 0.82rem; max-width: 28ch; }
 
-  .specItem { padding: 12px 8px 10px; border-radius: 16px; }
-  .specIconWrap { width: 22px; height: 22px; border-radius: 7px; }
-  .specIconWrap svg { width: 12px; height: 12px; }
-  .specValueMain { font-size: 1.2rem; }
-  .specLabel { font-size: 0.5rem; }
-  .specNote { font-size: 0.42rem; padding: 2px 5px; }
+  .specsList { gap: 10px; }
+  .specItem {
+    min-height: 84px;
+    gap: 2px;
+    padding: 10px 8px 8px;
+    border-radius: 14px;
+  }
+  .specIconWrap { width: 20px; height: 20px; border-radius: 6px; }
+  .specIconWrap svg { width: 11px; height: 11px; }
+  .specValueMain { font-size: 1.35rem; }
+  .specValueUnit { font-size: 0.58rem; }
+  .specLabel { font-size: 0.54rem; }
+  .specNote { font-size: 0.44rem; padding: 2px 6px; }
 
   .featureBlock { padding: 12px 14px; }
   .featureTag { padding: 6px 10px 6px 7px; font-size: 0.62rem; gap: 5px; }
@@ -1477,13 +1523,12 @@
 }
 
 @media (max-width: 420px) {
-  .specsList {
-    grid-template-columns: 1fr;
-  }
+  .specsList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
-  .specItem {
-    min-height: 96px;
-  }
+@media (max-width: 360px) {
+  .specsList { grid-template-columns: 1fr; }
+  .specItem { min-height: 82px; }
 }
 
 @media (hover: none) {

@@ -1,5 +1,5 @@
 /* ============================================================
-   FOOTER — Dark Premium Editorial (Final Polish)
+   FOOTER - Dark Premium Editorial (Final Polish)
    ============================================================ */
 
 @keyframes watermarkBreathe {
@@ -15,6 +15,11 @@
 @keyframes dotPulse {
   0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 33, 45, 0.4); }
   50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(179, 33, 45, 0); }
+}
+
+@keyframes fadeLift {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── Base ────────────────────────────────────────────────── */
@@ -90,9 +95,29 @@
   padding: 0 40px;
 }
 
+.ctaBand,
+.infoGrid,
+.bottom {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.footerVisible .ctaBand {
+  animation: fadeLift 0.7s var(--ease-out-expo) forwards;
+}
+
+.footerVisible .infoGrid {
+  animation: fadeLift 0.7s 0.12s var(--ease-out-expo) forwards;
+}
+
+.footerVisible .bottom {
+  animation: fadeLift 0.7s 0.22s var(--ease-out-expo) forwards;
+}
+
 /* ─── CTA Band ────────────────────────────────────────────── */
 
 .ctaBand {
+  position: relative;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: clamp(40px, 6vw, 100px);
@@ -156,7 +181,7 @@
   border-radius: 50%;
   background: var(--color-primary);
   box-shadow: 0 0 8px rgba(179, 33, 45, 0.6);
-  animation: dotPulse 3s ease-in-out infinite;
+  animation: dotPulse 3.2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
@@ -259,6 +284,11 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
+.mapBtn:active {
+  transform: translateY(0) scale(0.99);
+  transition: transform 0.08s ease;
+}
+
 .mapBtnPrimary {
   position: relative;
   color: #ffffff;
@@ -281,6 +311,11 @@
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 18px 48px rgba(179, 33, 45, 0.5);
   background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+}
+
+.mapBtnPrimary:active {
+  transform: translateY(-1px) scale(1);
+  transition: transform 0.08s ease;
 }
 
 /* ─── CTA column ──────────────────────────────────────────── */
@@ -375,6 +410,11 @@
   background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
 }
 
+.ctaBtn:active {
+  transform: translateY(-2px) scale(1);
+  transition: transform 0.08s ease;
+}
+
 .ctaBtn:hover svg {
   transform: translateX(4px) translateY(-4px);
   transition: transform 0.35s ease;
@@ -405,6 +445,11 @@
   background: rgba(255, 255, 255, 0.07);
   transform: translateY(-3px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+.phoneCard:active {
+  transform: translateY(0) scale(0.99);
+  transition: transform 0.08s ease;
 }
 
 .phoneCard:hover svg {
@@ -544,6 +589,14 @@
   transform: scaleX(0);
   transition: transform 0.6s var(--ease-out-expo);
   transform-origin: center;
+}
+
+.navLinkActive {
+  color: #ffffff;
+}
+
+.navLinkActive::after {
+  transform: scaleX(1);
 }
 
 .navLink:hover {
@@ -779,6 +832,7 @@
     width: 100%;
     max-width: 320px;
     justify-content: center;
+    align-self: center;
   }
 
   .bottom {
@@ -843,6 +897,14 @@
     font-size: 0.72rem;
   }
 
+  .socialStack {
+    align-items: center;
+  }
+
+  .socialBtn {
+    align-self: center;
+  }
+
   .phoneCard {
     width: 100%;
     padding: 16px;
@@ -862,5 +924,15 @@
   .copyright,
   .tagline {
     font-size: 0.72rem;
+  }
+}
+
+@media (hover: none) {
+  .navLink:hover {
+    transform: none;
+  }
+
+  .socialBtn:hover {
+    transform: none;
   }
 }

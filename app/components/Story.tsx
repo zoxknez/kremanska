@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "./Story.module.css";
-import { usePreferLightMedia } from "./usePreferLightMedia";
 
 const storyPoster =
   "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=1200";
@@ -90,7 +89,6 @@ const benefits = [
 /* ── Component ───────────────────────────────────────────── */
 
 export default function Story() {
-  const preferLightMedia = usePreferLightMedia();
   const [isVisible, setIsVisible] = useState(false);
   const [cardsVisible, setCardsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -131,7 +129,7 @@ export default function Story() {
             <span className={styles.titleAccent}>prirodne alkalne vode</span>
           </h2>
           <p className={styles.lead}>
-            Sa izvora na planini Tara, prirodno alkalna sa pH 9.2+ — voda koja
+            Sa izvora na planini Tara, prirodno alkalna sa pH 9.2+ - voda koja
             obogaćuje vaše telo esencijalnim mineralima bez ikakve obrade.
           </p>
         </div>
@@ -140,25 +138,18 @@ export default function Story() {
         <div className={`${styles.heroRow} ${isVisible ? styles.visible : ""}`}>
           <div className={styles.videoCard}>
             <div className={styles.imageOverlay} />
-            {preferLightMedia ? (
-              <div
-                className={styles.posterFrame}
-                style={{ backgroundImage: `url(${storyPoster})` }}
-              />
-            ) : (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className={styles.video}
-                poster={storyPoster}
-                aria-hidden="true"
-              >
-                <source src="/video/tara/tara_video.mp4" type="video/mp4" />
-              </video>
-            )}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className={styles.video}
+              poster={storyPoster}
+              aria-hidden="true"
+            >
+              <source src="/video/tara/tara_video.mp4" type="video/mp4" />
+            </video>
             {/* Origin pills overlay */}
             <div className={styles.originPills}>
               {originPills.map(({ Icon, label }) => (
@@ -179,7 +170,7 @@ export default function Story() {
             </p>
             <p className={styles.storyText}>
               Ne dodajemo ništa, ne oduzimamo ništa. Kremanska je priroda u
-              svom najčistijem obliku — direktno sa izvora do vaše kuće.
+              svom najčistijem obliku - direktno sa izvora do vaše kuće.
             </p>
 
             <div className={styles.statsRow}>

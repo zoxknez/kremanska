@@ -1,5 +1,5 @@
 /* ============================================================
-   FAQ — Premium Two-Column Accordion (Perfect Restoration)
+   FAQ - Premium Two-Column Accordion (Perfect Restoration)
    ============================================================ */
 
 /* ─── Keyframes ───────────────────────────────────────────── */
@@ -68,7 +68,7 @@
 
 .sidebar {
   position: sticky;
-  top: 140px;
+  top: calc(var(--header-offset) + 24px);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -99,7 +99,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--color-primary);
-  animation: dotPulse 3s ease-in-out infinite;
+  animation: dotPulse 3.2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
@@ -198,6 +198,11 @@
 .contactBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 15px 35px rgba(179, 33, 45, 0.25);
+}
+
+.contactBtn:active {
+  transform: translateY(0) scale(0.99);
+  transition: transform 0.08s ease;
 }
 
 /* ─── Accordion (Right Column - Restored) ───────────────── */
@@ -378,6 +383,11 @@
   .contact {
     padding: 24px 20px;
     align-items: stretch;
+  }
+
+  .contactLink {
+    width: 100%;
+    justify-content: center;
   }
 
   .itemBtn {

@@ -63,7 +63,7 @@ export const metadata: Metadata = {
       "Premium prirodna visokoalkalna voda (pH 9.2+) sa izvora na Nacionalnom parku Tara. Bogata magnezijumom, bez hemijske obrade.",
     images: [
       {
-        url: "/proizvodi/Kremanska 1.5L front.jpg",
+        url: "/proizvodi/Kremanska%201.5L%20front.jpg",
         width: 1200,
         height: 630,
         alt: "Kremanska voda - Prirodna alkalna voda",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     title: "Kremanska voda - Prirodna visokoalkalna voda",
     description:
       "Premium prirodna visokoalkalna voda (pH 9.2+) sa izvora na Nacionalnom parku Tara.",
-    images: ["/proizvodi/Kremanska 1.5L front.jpg"],
+    images: ["/proizvodi/Kremanska%201.5L%20front.jpg"],
   },
   robots: {
     index: true,
@@ -108,7 +108,7 @@ const structuredData = {
       url: "https://kremanska.rs",
       logo: {
         "@type": "ImageObject",
-        url: "https://kremanska.rs/proizvodi/Kremanska 1.5L front.jpg",
+        url: "https://kremanska.rs/proizvodi/Kremanska%201.5L%20front.jpg",
       },
       contactPoint: {
         "@type": "ContactPoint",

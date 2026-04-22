@@ -1,5 +1,5 @@
 /* ============================================================
-   STORY SECTION — Unified Origin + Benefits (Premium)
+   STORY SECTION - Unified Origin + Benefits (Premium)
    ============================================================ */
 
 @keyframes fadeUp {
@@ -27,7 +27,7 @@
 .section {
   position: relative;
   background: linear-gradient(180deg, #ffffff 0%, #fafbfd 45%, #f8f9fc 100%);
-  padding: clamp(80px, 12vh, 140px) 0;
+  padding: clamp(64px, 9vh, 108px) 0 clamp(20px, 3vh, 34px);
   overflow: hidden;
   isolation: isolate;
 }
@@ -381,7 +381,7 @@
   opacity: 0.5;
 }
 
-/* ─── Benefits grid — 3×2 compact cards ───────────────────── */
+/* ─── Benefits grid - 3×2 compact cards ───────────────────── */
 
 .grid {
   display: grid;
@@ -658,7 +658,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 72px 0;
+    padding: 64px 0 48px;
   }
 
   .header {
@@ -673,33 +673,53 @@
     font-size: 0.95rem;
   }
 
-  .heroRow {
-    padding: 20px;
-    border-radius: 28px;
-    margin-bottom: 40px;
-    gap: 24px;
+  .storyContent {
+    align-items: center;
+    text-align: center;
   }
 
   .storyTitle {
     font-size: 1.6rem;
+    text-align: center;
   }
 
   .storyText {
     font-size: 0.9rem;
+    text-align: center;
   }
 
   .statsRow {
-    flex-wrap: wrap;
-    padding: 12px 14px;
-    border-radius: 16px;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 15px;
+  }
+
+  .stat {
+    flex: 0 0 auto;
+    width: 100%;
+    gap: 1px;
+    padding: 0;
+  }
+
+  .statDivider {
+    width: 74%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(179, 33, 45, 0.1), transparent);
   }
 
   .statValue {
-    font-size: 1.25rem;
+    font-size: 1.42rem;
+  }
+
+  .statUnit {
+    font-size: 0.66rem;
+    margin-left: 1px;
   }
 
   .statLabel {
-    font-size: 0.48rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
   }
 
   .grid {
@@ -726,10 +746,15 @@
 
   .cta {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 24px;
     padding: 32px 24px;
     border-radius: 24px;
+  }
+
+  .ctaCopy {
+    width: 100%;
+    text-align: center;
   }
 
   .ctaBtn {
@@ -744,7 +769,7 @@
 
 @media (max-width: 480px) {
   .section {
-    padding: 56px 0;
+    padding: 48px 0 32px;
   }
 
   .eyebrow {
@@ -796,14 +821,36 @@
 
   .statsRow {
     flex-direction: column;
-    gap: 8px;
-    padding: 14px;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 14px;
   }
 
   .statDivider {
-    width: 80%;
+    width: 72%;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(179, 33, 45, 0.1), transparent);
+  }
+
+  .stat {
+    flex: 0 0 auto;
+    width: 100%;
+    gap: 1px;
+    padding: 0;
+  }
+
+  .statValue {
+    font-size: 1.42rem;
+  }
+
+  .statUnit {
+    font-size: 0.66rem;
+    margin-left: 1px;
+  }
+
+  .statLabel {
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
   }
 
   .card {
@@ -842,5 +889,14 @@
   .ctaBtn {
     padding: 14px 28px;
     font-size: 0.76rem;
+  }
+}
+
+@media (hover: none) {
+  .videoCard:hover,
+  .originPill:hover,
+  .card:hover,
+  .ctaBtn:hover {
+    transform: none;
   }
 }

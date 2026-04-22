@@ -13,6 +13,7 @@ const locationDirectionsHref =
 
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeHref, setActiveHref] = useState<string>("#contact");
   const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -23,14 +24,41 @@ export default function Footer() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const ids = ["hero", "about", "products", "faq", "contact"];
+    const targets = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+        if (!visible?.target) return;
+        setActiveHref(`#${(visible.target as HTMLElement).id}`);
+      },
+      { rootMargin: "-35% 0px -55% 0px", threshold: [0.05, 0.1, 0.2, 0.35, 0.5] }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer id="contact" className={styles.footer} ref={footerRef}>
+    <footer
+      id="contact"
+      className={`${styles.footer} ${isVisible ? styles.footerVisible : ""}`}
+      ref={footerRef}
+    >
       <div className={styles.topGlow} aria-hidden="true" />
 
       <div className={styles.inner}>
         {/* ════════════ CTA + MAP BAND ════════════ */}
         <div className={styles.ctaBand}>
-          {/* Left — Map */}
+          {/* Left - Map */}
           <div className={styles.mapCol}>
             <div className={styles.mapHeader}>
               <span className={styles.mapEyebrow}>
@@ -80,7 +108,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right — CTA content */}
+          {/* Right - CTA content */}
           <div className={styles.ctaCol}>
             <div className={styles.ctaContent}>
               <h3 className={styles.ctaTitle}>
@@ -88,7 +116,7 @@ export default function Footer() {
               </h3>
               <p className={styles.ctaDesc}>
                 Premium izvorna voda sa srca Nacionalnog parka Tara. Visokoalkalna,
-                bogata mineralima — direktno sa izvora do vaše kuće.
+                bogata mineralima - direktno sa izvora do vaše kuće.
               </p>
             </div>
 
@@ -136,7 +164,7 @@ export default function Footer() {
 
           <div className={styles.infoBlock}>
             <span className={styles.infoLabel}>Stranice</span>
-            <nav className={styles.footerStack} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <nav className={styles.footerStack} aria-label="Footer navigacija">
               {[
                 { name: "Početna", href: "#hero", external: false },
                 { name: "Ponuda", href: "#products", external: false },
@@ -148,7 +176,8 @@ export default function Footer() {
                   href={item.href}
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
-                  className={styles.navLink}
+                  aria-current={!item.external && activeHref === item.href ? "page" : undefined}
+                  className={`${styles.navLink} ${!item.external && activeHref === item.href ? styles.navLinkActive : ""}`}
                 >
                   {item.name}
                 </a>
@@ -158,7 +187,7 @@ export default function Footer() {
 
           <div className={styles.infoBlock}>
             <span className={styles.infoLabel}>Pratite nas</span>
-            <div className={styles.socialStack} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div className={styles.socialStack}>
               <a
                 href="https://www.instagram.com/kremanskavoda/"
                 target="_blank"

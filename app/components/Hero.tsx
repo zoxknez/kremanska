@@ -101,6 +101,56 @@ export default function Hero() {
             <span className={styles.statsShimmer} />
           </div>
 
+          {/* Liquid Nexus (Mobile centerpiece) */}
+          <div className={styles.liquidNexus} aria-hidden="true">
+            <div className={styles.dropMain}>
+              <div className={styles.dropReflection} />
+              <div className={styles.dropBubbles}>
+                <span className={styles.bubble} />
+                <span className={styles.bubble} />
+                <span className={styles.bubble} />
+              </div>
+              <div className={styles.dropCenterLabel}>
+                <span>Kremanska</span>
+                <span>Voda</span>
+              </div>
+            </div>
+            
+            {/* 5 Satellite Orbs */}
+            <div className={styles.satellite} data-pos="s1">
+              <span className={styles.satValue}>9.2+</span>
+              <span className={styles.satLabel}>pH</span>
+            </div>
+            <div className={styles.satellite} data-pos="s2">
+              <span className={styles.satValue}>100%</span>
+              <span className={styles.satLabel}>Prirodna</span>
+            </div>
+            <div className={styles.satellite} data-pos="s3">
+              <span className={styles.satValue}>Mg++</span>
+              <span className={styles.satLabel}>Minerali</span>
+            </div>
+            <div className={styles.satellite} data-pos="s4">
+              <span className={styles.satValue}>822m</span>
+              <span className={styles.satLabel}>Visina</span>
+            </div>
+            <div className={styles.satellite} data-pos="s5">
+              <span className={styles.satValue}>Tara</span>
+              <span className={styles.satLabel}>Izvor</span>
+            </div>
+
+            {/* SVG Filter for Liquid Refraction */}
+            <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }}>
+              <defs>
+                <filter id="liquid-refraction">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="3" result="noise">
+                    <animate attributeName="baseFrequency" dur="15s" values="0.01 0.01;0.02 0.03;0.01 0.01" repeatCount="indefinite" />
+                  </feTurbulence>
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+              </defs>
+            </svg>
+          </div>
+
           {/* CTA */}
           <div className={styles.ctas} style={{ animationDelay: "1s" }}>
             <a
